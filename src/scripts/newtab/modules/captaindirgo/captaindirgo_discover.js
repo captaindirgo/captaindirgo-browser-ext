@@ -1,26 +1,26 @@
-var DissenterHome = function() {
+var CaptainDirgoDiscover = function() {
 
     var scope = this;
 
     //
 
-    var parentContainer = document.getElementById("dissenter-content__home");
-    var homeItemContainer = document.getElementById("dissenter-home-card-container");
+    var parentContainer = document.getElementById("captaindirgo-content__discover");
+    var urlItemContainer = document.getElementById("captaindirgo-discover-url-container");
 
     //
 
     function reset() {
-        homeItemContainer.innerText = "";
+        urlItemContainer.innerText = "";
     };
 
     function loadData() {
-        //Perform request to get notifications
+        //Perform request to get comment count
         performRequest({
             method: 'GET',
-            url: 'https://dissenter.com?fmt=json'
+            url: 'https://captaindirgo.com/url?fmt=json'
         }, function(error, data) {
             //Must be object
-            if (!data || !isObject(data)) return;
+            if (!isObject(data)) return;
 
             var blocks = data.commentUrls;
             if (!blocks || !isArray(blocks)) return;
@@ -29,9 +29,9 @@ var DissenterHome = function() {
 
             for (var i = 0; i < blocks.length; i++) {
                 var block = blocks[i];
-                var node = newTab.classes.modules.dissenter.index.getDissenterItem(block);
+                var node = newTab.classes.modules.captaindirgo.index.getCaptainDirgoItem(block);
                 if (!node) continue;
-                homeItemContainer.appendChild(node);
+                urlItemContainer.appendChild(node);
             };
         });
     };

@@ -1,5 +1,5 @@
 /**
- * @description - Gab Dissenter - Reddit content script
+ * @description - Gab CaptainDirgo - Reddit content script
  */
 var GDReddit = function() {
     //Global scope
@@ -72,7 +72,7 @@ var GDReddit = function() {
             button.style.removeProperty("background-color");
         };
 
-        var svg = getDissenterDLogoAsSVG("17px", "17px", "#878a8c", "#fff")
+        var svg = getCaptainDirgoDLogoAsSVG("17px", "17px", "#878a8c", "#fff")
         svg.style.setProperty("display", 'inline-block', "important");
         svg.style.setProperty("vertical-align", 'middle', "important");
 
@@ -94,7 +94,7 @@ var GDReddit = function() {
     };
 
     /**
-     * @description - Makes a request to the background to open a new dissenter comment window with current page url
+     * @description - Makes a request to the background to open a new captaindirgo comment window with current page url
      * @function dissentThisPost
      */
     function dissentThisPost(permalink) {

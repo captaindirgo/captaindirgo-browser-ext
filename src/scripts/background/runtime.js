@@ -32,11 +32,11 @@ __BROWSER__.tabs.onActivated.addListener(function(activeInfo) {
 //Not on edge
 if (BROWSER_CONFIG.slug !== "edge") {
     /**
-     * @description - Within the URL box, type "dissent" to search Dissenter.com
+     * @description - Within the URL box, type "dissent" to search CaptainDirgo.com
      */
     __BROWSER__.omnibox.onInputEntered.addListener(function(text, disposition) {
         // Encode user input for special characters , / ? : @ & = + $ #
-        var newURL = 'https://dissenter.com/search?q=' + encodeURIComponent(text);
+        var newURL = 'https://captaindirgo.com/search?q=' + encodeURIComponent(text);
 
         if (disposition == "currentTab") {
             __BROWSER__.tabs.query({

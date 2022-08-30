@@ -11,11 +11,11 @@ function _init(defaults) {
     newTab.userDefaults = defaults;
     newTab.classes = {
         modules: {
-            dissenter: {
-                index: new Dissenter(),
-                home: new DissenterHome(),
-                discover: new DissenterDiscover(),
-                notifications: new DissenterNotifications(),
+            captaindirgo: {
+                index: new CaptainDirgo(),
+                home: new CaptainDirgoHome(),
+                discover: new CaptainDirgoDiscover(),
+                notifications: new CaptainDirgoNotifications(),
             },
             topsites: {
                 index: new TopSites(),

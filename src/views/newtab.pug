@@ -101,16 +101,16 @@ html
                                         img(class="sidebar-settings-meta-background-image" id="sidebar-settings-meta-background-image")
 
                         div(class="sidebar-table-section")
-                            span(class="sidebar-table-section__title") Dissenter
+                            span(class="sidebar-table-section__title") CaptainDirgo
                             div(class="sidebar-table-section__block")
                                 div(class="sidebar-table-item")
-                                    label(class="sidebar-table-item__title" for="si_nt_dissenter_enabled") Enabled
+                                    label(class="sidebar-table-item__title" for="si_nt_captaindirgo_enabled") Enabled
                                     div(class="sidebar-table-item__meta sidebar-table-item__meta--inline")
-                                        input(class="sidebar-table-item__input sidebar-table-item__input--checkbox" id="si_nt_dissenter_enabled" type="checkbox" data-storage-key="nt_dissenter_enabled")
+                                        input(class="sidebar-table-item__input sidebar-table-item__input--checkbox" id="si_nt_captaindirgo_enabled" type="checkbox" data-storage-key="nt_captaindirgo_enabled")
                                 div(class="sidebar-table-item")
-                                    label(class="sidebar-table-item__title" for="si_nt_dissenter_default_tab") Default Tab
+                                    label(class="sidebar-table-item__title" for="si_nt_captaindirgo_default_tab") Default Tab
                                     div(class="sidebar-table-item__meta sidebar-table-item__meta--inline")
-                                        select(class="sidebar-table-item__input sidebar-table-item__input--select" id="si_nt_dissenter_default_tab" data-storage-key="nt_dissenter_default_tab")
+                                        select(class="sidebar-table-item__input sidebar-table-item__input--select" id="si_nt_captaindirgo_default_tab" data-storage-key="nt_captaindirgo_default_tab")
                                             option(value="home") Home
                                             option(value="discover") Discover
                                             option(value="notifications") Notifications
@@ -148,45 +148,45 @@ html
             
                     div(class="shelf" id="top-site-list")
 
-                    div(class="dissenter-section" id="dissenter-section")
-                        div(class="dissenter-section__inner")
-                            div(class="dissenter-section-header")
-                                div(class="dissenter-section-header__inner")
-                                    div(class="dissenter-section-header__meta")
-                                        img(class="dissenter-section-header__meta__icon" src="../assets/images/logo/icon-128.png" alt="Settings")
-                                        div(class="dissenter-section-header__meta-tabs")
-                                            a(class="dissenter-section-header__meta-tabs__btn text active" data-tab="home") For You
-                                            a(class="dissenter-section-header__meta-tabs__btn text" data-tab="discover") Across the Web
-                                            a(class="dissenter-section-header__meta-tabs__btn text" id="dissenter-notification-tab-btn" data-tab="notifications") Notifications
+                    div(class="captaindirgo-section" id="captaindirgo-section")
+                        div(class="captaindirgo-section__inner")
+                            div(class="captaindirgo-section-header")
+                                div(class="captaindirgo-section-header__inner")
+                                    div(class="captaindirgo-section-header__meta")
+                                        img(class="captaindirgo-section-header__meta__icon" src="../assets/images/logo/icon-128.png" alt="Settings")
+                                        div(class="captaindirgo-section-header__meta-tabs")
+                                            a(class="captaindirgo-section-header__meta-tabs__btn text active" data-tab="home") For You
+                                            a(class="captaindirgo-section-header__meta-tabs__btn text" data-tab="discover") Across the Web
+                                            a(class="captaindirgo-section-header__meta-tabs__btn text" id="captaindirgo-notification-tab-btn" data-tab="notifications") Notifications
                                     
-                            div(class="dissenter-section-content")
-                                div(class="dissenter-section-content__inner" id="dissenter-content")
+                            div(class="captaindirgo-section-content")
+                                div(class="captaindirgo-section-content__inner" id="captaindirgo-content")
                                     
-                                    div(id="dissenter-content__home" class="hidden")
-                                        div(class="dissenter-section-content-block")
-                                            div(class="dissenter-section-content-block__inner")
-                                                div(class="dissenter-section-content-block__header")
-                                                    img(class="dissenter-section-content-block__header__icon" src="../assets/images/icons/top-sites.svg")
-                                                    span(class="dissenter-section-content-block__header__title") Home Feed
-                                                    a(class="dissenter-section-content-block__header__btn")
-                                                div(class="dissenter-section-content-block__scroll dissenter-section-content-block__scroll--horizontal" id="dissenter-home-card-container")
+                                    div(id="captaindirgo-content__home" class="hidden")
+                                        div(class="captaindirgo-section-content-block")
+                                            div(class="captaindirgo-section-content-block__inner")
+                                                div(class="captaindirgo-section-content-block__header")
+                                                    img(class="captaindirgo-section-content-block__header__icon" src="../assets/images/icons/top-sites.svg")
+                                                    span(class="captaindirgo-section-content-block__header__title") Home Feed
+                                                    a(class="captaindirgo-section-content-block__header__btn")
+                                                div(class="captaindirgo-section-content-block__scroll captaindirgo-section-content-block__scroll--horizontal" id="captaindirgo-home-card-container")
                                                     
-                                    div(id="dissenter-content__discover" class="hidden")
-                                        div(class="dissenter-section-content-block")
-                                            div(class="dissenter-section-content-block__inner")
-                                                div(class="dissenter-section-content-block__header")
-                                                    img(class="dissenter-section-content-block__header__icon" src="../assets/images/icons/top-sites.svg")
-                                                    span(class="dissenter-section-content-block__header__title") Popular URLs
-                                                    a(class="dissenter-section-content-block__header__btn")
-                                                div(class="dissenter-section-content-block__scroll dissenter-section-content-block__scroll--horizontal" id="dissenter-discover-url-container")
+                                    div(id="captaindirgo-content__discover" class="hidden")
+                                        div(class="captaindirgo-section-content-block")
+                                            div(class="captaindirgo-section-content-block__inner")
+                                                div(class="captaindirgo-section-content-block__header")
+                                                    img(class="captaindirgo-section-content-block__header__icon" src="../assets/images/icons/top-sites.svg")
+                                                    span(class="captaindirgo-section-content-block__header__title") Popular URLs
+                                                    a(class="captaindirgo-section-content-block__header__btn")
+                                                div(class="captaindirgo-section-content-block__scroll captaindirgo-section-content-block__scroll--horizontal" id="captaindirgo-discover-url-container")
 
-                                    div(id="dissenter-content__notifications" class="hidden")
-                                        div(class="dissenter-section-content-block")
-                                            div(class="dissenter-section-content-block__inner")
-                                                div(class="dissenter-section-content-block__header")
-                                                    img(class="dissenter-section-content-block__header__icon" src="../assets/images/icons/top-sites.svg")
-                                                    span(class="dissenter-section-content-block__header__title") Notifications
-                                                div(class="dissenter-section-content-block__scroll dissenter-section-content-block__scroll--vertical" id="dissenter-notifications-container")
+                                    div(id="captaindirgo-content__notifications" class="hidden")
+                                        div(class="captaindirgo-section-content-block")
+                                            div(class="captaindirgo-section-content-block__inner")
+                                                div(class="captaindirgo-section-content-block__header")
+                                                    img(class="captaindirgo-section-content-block__header__icon" src="../assets/images/icons/top-sites.svg")
+                                                    span(class="captaindirgo-section-content-block__header__title") Notifications
+                                                div(class="captaindirgo-section-content-block__scroll captaindirgo-section-content-block__scroll--vertical" id="captaindirgo-notifications-container")
 
                                                 
                                 

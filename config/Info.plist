@@ -7,9 +7,9 @@
 	<key>Builder Version</key>
 	<string>14606.1.36.1.9</string>
 	<key>CFBundleDisplayName</key>
-	<string>Dissenter Extension</string>
+	<string>CaptainDirgo Extension</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.gab.dissenter</string>
+	<string>com.cptd.captaindirgo</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
@@ -41,18 +41,18 @@
 				<key>Include By Default</key>
 				<true/>
 				<key>Label</key>
-				<string>Dissenter</string>
+				<string>CaptainDirgo</string>
 				<key>Palette Label</key>
-				<string>Dissenter</string>
+				<string>CaptainDirgo</string>
 				<key>Popover</key>
 				<string>popup</string>
 				<key>Tool Tip</key>
-				<string>Dissenter</string>
+				<string>CaptainDirgo</string>
 			</dict>
 		</array>
 	</dict>
 	<key>Description</key>
-	<string>Dissenter is the comment section of the Internet.</string>
+	<string>CaptainDirgo is the comment section of the Internet.</string>
 	<key>ExtensionInfoDictionaryVersion</key>
 	<string>1.0</string>
 	<key>Permissions</key>
@@ -66,6 +66,6 @@
 		</dict>
 	</dict>
 	<key>Website</key>
-	<string>https://dissenter.com</string>
+	<string>https://captaindirgo.com</string>
 </dict>
 </plist>

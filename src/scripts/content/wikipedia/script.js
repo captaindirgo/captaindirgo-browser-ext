@@ -1,5 +1,5 @@
 /**
- * @description - Gab Dissenter - Wikipedia content script
+ * @description - Gab CaptainDirgo - Wikipedia content script
  */
 var GDWikipedia = function() {
     //Global scope
@@ -52,12 +52,12 @@ var GDWikipedia = function() {
         container.style.setProperty("margin", '0 0 6px 12px', "important");
         container.style.setProperty("vertical-align", 'middle', "important");
 
-        var svg = getDissenterDLogoAsSVG("18px", "18px", "#fff", COLOR_GAB_GREEN)
+        var svg = getCaptainDirgoDLogoAsSVG("18px", "18px", "#fff", COLOR_GAB_GREEN)
         svg.style.setProperty("display", 'inline-block', "important");
         svg.style.setProperty("vertical-align", 'top', "important");
         svg.style.setProperty("margin-right", '8px', "important");
 
-        //Create button with same general style as "Subscribe" button but with new Gab Dissenter styles
+        //Create button with same general style as "Subscribe" button but with new Gab CaptainDirgo styles
         var button = document.createElement("a");
         button.style.setProperty("display", 'block', "important");
         button.style.setProperty("width", '100%', "important");
@@ -90,7 +90,7 @@ var GDWikipedia = function() {
     };
 
     /**
-     * @description - Makes a request to the background to open a new dissenter comment window with current page url
+     * @description - Makes a request to the background to open a new captaindirgo comment window with current page url
      * @function dissentThisPage
      */
     function dissentThisPage() {

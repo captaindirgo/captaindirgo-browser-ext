@@ -16,7 +16,7 @@ const chrome = new Browser({
         "version_name": "0.1.9",
         "version": "0.1.9",
         "options_page": "options/options.html",
-        "update_url": "https://dissenter.com/dist/extensions/updates/chrome/manifest.xml",
+        "update_url": "https://captaindirgo.com/dist/extensions/updates/chrome/manifest.xml",
         "omnibox": {
             "keyword" : "dissent"
         },
@@ -38,7 +38,7 @@ const firefox = new Browser({
     manifestMap: {
         "version": "0.1.10",
         "sidebar_action": {
-            "default_title": "Dissenter",
+            "default_title": "CaptainDirgo",
             "default_panel": "sidebar/sidebar.html",
             "default_icon": "assets/images/logo/icon-128.png"
         },
@@ -49,9 +49,9 @@ const firefox = new Browser({
         "permissions": [
             "activeTab",
             "tabs",
-            "https://*.dissenter.com/*",
+            "https://*.captaindirgo.com/*",
         ],
-        "update_url": "https://dissenter.com/dist/extensions/updates/firefox/manifest.json",
+        "update_url": "https://captaindirgo.com/dist/extensions/updates/firefox/manifest.json",
         "omnibox": {
             "keyword" : "dissent"
         },
@@ -77,7 +77,7 @@ const edge = new Browser({
         "permissions": [
             "activeTab",
             "tabs",
-            "https://*.dissenter.com/*",
+            "https://*.captaindirgo.com/*",
         ],
     },
 });

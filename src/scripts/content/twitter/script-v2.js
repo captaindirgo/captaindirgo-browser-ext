@@ -1,5 +1,5 @@
 /**
- * @description - Gab Dissenter - Twitter V2 content script
+ * @description - Gab CaptainDirgo - Twitter V2 content script
  */
 var GDTwitterV2 = function() {
     //Global scope
@@ -62,7 +62,7 @@ var GDTwitterV2 = function() {
         button.style.setProperty("bottom", '-8px', "important");
         button.style.setProperty("border-radius", '50%', "important");
 
-        var svg = getDissenterDLogoAsSVG("18px", "18px", "#657786", "#fff")
+        var svg = getCaptainDirgoDLogoAsSVG("18px", "18px", "#657786", "#fff")
         svg.style.setProperty("display", 'block', "important");
         svg.style.setProperty("margin", '9px', "important");
 
@@ -86,7 +86,7 @@ var GDTwitterV2 = function() {
     };
 
     /**
-     * @description - Makes a request to the background to open a new dissenter comment window with current page url
+     * @description - Makes a request to the background to open a new captaindirgo comment window with current page url
      * @function dissentThisTweet
      */
     function dissentThisTweet(permalink) {

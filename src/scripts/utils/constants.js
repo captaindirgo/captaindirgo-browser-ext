@@ -4,10 +4,10 @@ var BROWSER_FIREFOX_SLUG = 'firefox';
 var BROWSER_EDGE_SLUG = 'edge';
 var BROWSER_SAFARI_SLUG = 'safari';
 
-/* BASE URI FOR DISSENTER EXTENSION */
-var DISSENTER_HOME_PAGE_URI = "https://dissenter.com";
-var BASE_URI = 'https://dissenter.com/discussion/begin-extension?url=';
-var COMMENT_COUNT_URI = "https://dissenter.com/notification/comment-count?url=";
+/* BASE URI FOR CAPTAINDIRGO EXTENSION */
+var CAPTAINDIRGO_HOME_PAGE_URI = "https://captaindirgo.com";
+var BASE_URI = 'https://captaindirgo.com/discussion/begin-extension?url=';
+var COMMENT_COUNT_URI = "https://captaindirgo.com/notification/comment-count?url=";
 
 /* ACTIONS */
 var BACKGROUND_ACTION_OPEN_POPUP = 'open_popup';
@@ -54,7 +54,7 @@ var SEARCH_ENGINES = [
 ];
 
 /* STORAGE */
-var STORAGE_BASE = 'gab_dissenter_extension_data';
+var STORAGE_BASE = 'gab_captaindirgo_extension_data';
 
 var TWITTER_BUTTONS_ENABLED = 'twitter_buttons_enabled';
 var REDDIT_BUTTONS_ENABLED = 'reddit_buttons_enabled';
@@ -85,8 +85,8 @@ var NT_BACKGROUND_SOLID_COLOR = 'nt_background_solid_color';
 var NT_BACKGROUND_IMAGE = 'nt_background_image';
 var NT_BACKGROUND_RANDOM_GRADIENT = 'nt_background_random_gradient';
 
-var NT_DISSENTER_ENABLED = 'nt_dissenter_enabled';
-var NT_DISSENTER_DEFAULT_TAB = 'nt_dissenter_default_tab';
+var NT_CAPTAINDIRGO_ENABLED = 'nt_captaindirgo_enabled';
+var NT_CAPTAINDIRGO_DEFAULT_TAB = 'nt_captaindirgo_default_tab';
 
 /* STORAGE DEFAULTS */
 var STORAGE_DEFAULT_PARAMS = {};
@@ -112,7 +112,7 @@ STORAGE_DEFAULT_PARAMS[NT_COLORS_TEXT] = "white";
 STORAGE_DEFAULT_PARAMS[NT_BACKGROUND_SOLID_COLOR] = "";
 STORAGE_DEFAULT_PARAMS[NT_BACKGROUND_IMAGE] = "";
 STORAGE_DEFAULT_PARAMS[NT_BACKGROUND_RANDOM_GRADIENT] = true;
-STORAGE_DEFAULT_PARAMS[NT_DISSENTER_ENABLED] = true;
-STORAGE_DEFAULT_PARAMS[NT_DISSENTER_DEFAULT_TAB] = "home";
+STORAGE_DEFAULT_PARAMS[NT_CAPTAINDIRGO_ENABLED] = true;
+STORAGE_DEFAULT_PARAMS[NT_CAPTAINDIRGO_DEFAULT_TAB] = "home";
 
 var STORAGE_KEY_ALL = 'all';

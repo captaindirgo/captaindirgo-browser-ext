@@ -1,12 +1,12 @@
-var DissenterNotifications = function() {
+var CaptainDirgoNotifications = function() {
 
     var scope = this;
 
     //
 
-    var parentContainer = document.getElementById("dissenter-content__notifications");
-    var notificationItemContainer = document.getElementById("dissenter-notifications-container");
-    var notificationTabBtn = document.getElementById("dissenter-notification-tab-btn");
+    var parentContainer = document.getElementById("captaindirgo-content__notifications");
+    var notificationItemContainer = document.getElementById("captaindirgo-notifications-container");
+    var notificationTabBtn = document.getElementById("captaindirgo-notification-tab-btn");
 
     var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
@@ -23,7 +23,7 @@ var DissenterNotifications = function() {
         //Perform request to get notifications
         performRequest({
             method: 'GET',
-            url: 'https://dissenter.com/notification?fmt=json'
+            url: 'https://captaindirgo.com/notification?fmt=json'
         }, function(error, data) {
             //Must be object
             if (!data || !isObject(data)) return;
@@ -36,7 +36,7 @@ var DissenterNotifications = function() {
             for (var i = 0; i < blocks.length; i++) {
                 var block = blocks[i];
 
-                var node = getDissenterNotification(block);
+                var node = getCaptainDirgoNotification(block);
                 if (!node) continue;
 
                 notificationItemContainer.appendChild(node);
@@ -57,7 +57,7 @@ var DissenterNotifications = function() {
         }
     };
 
-    function getDissenterNotification(notiBlock) {
+    function getCaptainDirgoNotification(notiBlock) {
         if (!isObject(notiBlock)) return null;
 
         //Blocks
@@ -73,8 +73,8 @@ var DissenterNotifications = function() {
         subjectType = subjectType.toLowerCase();
 
         var noti = document.createElement('a');
-        noti.className = 'dissenter-noti cs--white-on-black ' + action;
-        if (commentId) noti.href = "https://dissenter.com/comment/" + commentId;
+        noti.className = 'captaindirgo-noti cs--white-on-black ' + action;
+        if (commentId) noti.href = "https://captaindirgo.com/comment/" + commentId;
         if (notiBlock.status === "new") {
             noti.classList.add("new");
             newNotiCount ++;
@@ -83,14 +83,14 @@ var DissenterNotifications = function() {
         //
 
         var icons = document.createElement('div');
-        icons.className = 'dissenter-noti__icons';
+        icons.className = 'captaindirgo-noti__icons';
 
         var urlIcon = document.createElement('img');
-        urlIcon.className = 'dissenter-noti__icons__url';
+        urlIcon.className = 'captaindirgo-noti__icons__url';
         urlIcon.src = 'https://logo.clearbit.com/' + hostname;
 
         var actionIcon = document.createElement('img');
-        actionIcon.className = 'dissenter-noti__icons__action';
+        actionIcon.className = 'captaindirgo-noti__icons__action';
         var actionIconUrl = "../assets/images/icons/" + getIconForAction(action);
         actionIcon.src = actionIconUrl;
 
@@ -100,14 +100,14 @@ var DissenterNotifications = function() {
         //
 
         var content = document.createElement('div');
-        content.className = 'dissenter-noti__page-content';
+        content.className = 'captaindirgo-noti__page-content';
 
         var title = document.createElement('span');
-        title.className = 'dissenter-noti__page-content__title';
+        title.className = 'captaindirgo-noti__page-content__title';
         title.textContent = urlBlock["title"] || "";
 
         var url = document.createElement('span');
-        url.className = 'dissenter-noti__page-content__url';
+        url.className = 'captaindirgo-noti__page-content__url';
         url.textContent = urlBlock["url"] || "";
 
         content.appendChild(title);
@@ -116,22 +116,22 @@ var DissenterNotifications = function() {
         //
 
         var context = document.createElement('div');
-        context.className = 'dissenter-noti__context';
+        context.className = 'captaindirgo-noti__context';
 
         var name = document.createElement('span');
-        name.className = 'dissenter-noti__context__name';
+        name.className = 'captaindirgo-noti__context__name';
         name.textContent = actorBlock["username"] || "";
 
         var text = document.createElement('span');
-        text.className = 'dissenter-noti__context__text';
+        text.className = 'captaindirgo-noti__context__text';
         text.textContent = getActionInPastTense(action) + " your " + subjectType;
 
         var elapsed = document.createElement('span');
-        elapsed.className = 'dissenter-noti__context__elapsed';
+        elapsed.className = 'captaindirgo-noti__context__elapsed';
         elapsed.textContent = getElapsedTime(notiBlock["created"] || "");
 
         var subject = document.createElement('p');
-        subject.className = 'dissenter-noti__context__subject';
+        subject.className = 'captaindirgo-noti__context__subject';
         subject.textContent = subjectBlock["body"] || "";
 
         context.appendChild(name);
@@ -144,7 +144,7 @@ var DissenterNotifications = function() {
             var bodyText = relatedBlock["body"] || "";
 
             var reply = document.createElement('p');
-            reply.className = 'dissenter-noti__context__reply';
+            reply.className = 'captaindirgo-noti__context__reply';
             reply.textContent = bodyText;
 
             context.appendChild(reply);
@@ -153,7 +153,7 @@ var DissenterNotifications = function() {
         //
 
         var meta = document.createElement('div');
-        meta.className = 'dissenter-noti__meta';
+        meta.className = 'captaindirgo-noti__meta';
 
         meta.appendChild(content);
         meta.appendChild(context);

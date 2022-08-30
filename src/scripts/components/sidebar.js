@@ -29,7 +29,7 @@ var Sidebar = function() {
         //Must be object
         if (!isObject(activeTab)) {
             //Set default
-            iframe.setAttribute('src', DISSENTER_HOME_PAGE_URI);
+            iframe.setAttribute('src', CAPTAINDIRGO_HOME_PAGE_URI);
             scope.toggleLoading(false);
             return;
         }
@@ -46,13 +46,13 @@ var Sidebar = function() {
         //Set currently active if different
         currentActiveUrl = url;
 
-        //Encode current tab url along with base dissenter.com url
+        //Encode current tab url along with base captaindirgo.com url
         var encoded = encodeURIComponent(url);
         var commentUrl = BASE_URI + encoded;
 
         //Url must contain ://, set home page iframe if not
         if (url.indexOf('://') == -1) {
-            commentUrl = DISSENTER_HOME_PAGE_URI;
+            commentUrl = CAPTAINDIRGO_HOME_PAGE_URI;
         }
 
         //Set src

@@ -8,7 +8,7 @@ class Browser {
     };
 
     get path() {
-       if (this.slug === 'safari') return `build/${this.slug}/dissenter.safariextension`
+       if (this.slug === 'safari') return `build/${this.slug}/captaindirgo.safariextension`
        return `build/${this.slug}`;
    };
 };

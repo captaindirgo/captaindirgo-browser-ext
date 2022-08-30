@@ -1,12 +1,12 @@
-# Dissenter Browser Extension
+# CaptainDirgo Browser Extension
 
-This repository holds the Dissenter Browser Extension code that is used to generate the final distribution code per each browser.
+This repository holds the CaptainDirgo Browser Extension code that is used to generate the final distribution code per each browser.
 
-For more information, please visit: https://dissenter.com
+For more information, please visit: https://captaindirgo.com
 
-# • Download the Dissenter Browser Extension
+# • Download the CaptainDirgo Browser Extension
 
-Please head over to https://dissenter.com/download to download the extension for your specific browser and view detailed installation instructions.
+Please head over to https://captaindirgo.com/download to download the extension for your specific browser and view detailed installation instructions.
 
 # • Installation
 
@@ -127,7 +127,7 @@ We use `pug` (https://pugjs.org) for each of the `views` files.
 | File | Usage |
 | --- | --- |
 `background.pug` | Simple file that just includes the final `background.js` script.
-`popup.pug` | The primary file that contains the functionality display the Dissenter.com iframe.
+`popup.pug` | The primary file that contains the functionality display the CaptainDirgo.com iframe.
 
 
 # • Build Process

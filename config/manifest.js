@@ -1,9 +1,9 @@
 module.exports = manifest = {
     "manifest_version": 2,
-    "name": "Dissenter Extension",
-    "short_name": "Dissenter",
-    "description": "Dissenter is the comment section of the Internet.",
-    "homepage_url": "https://dissenter.com",
+    "name": "CaptainDirgo Extension",
+    "short_name": "CaptainDirgo",
+    "description": "CaptainDirgo is the comment section of the Internet.",
+    "homepage_url": "https://captaindirgo.com",
     "icons": {
         "16": "assets/images/logo/icon-16.png",
         "48": "assets/images/logo/icon-48.png",
@@ -11,7 +11,7 @@ module.exports = manifest = {
     },
     "permissions": [
         "activeTab",
-        "https://*.dissenter.com/*"
+        "https://*.captaindirgo.com/*"
     ],
     "browser_action": {
         "default_icon": "assets/images/logo/icon-128.png",
@@ -56,7 +56,7 @@ module.exports = manifest = {
             "js": ["content/all/script/script.js"]
         }
     ],
-    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self' https://*.dissenter.com/*",
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self' https://*.captaindirgo.com/*",
     "incognito": "spanning",
     "optional_permissions": [
         "topSites"

@@ -4,7 +4,7 @@ var GDDisqus = function() {
     var scope = this;
 
     /**
-     * @description - Attempts to find disqus thread on any site and appends dissenter button before it
+     * @description - Attempts to find disqus thread on any site and appends captaindirgo button before it
      * @function fetchElements
      * @return {Boolean} success
      */
@@ -31,7 +31,7 @@ var GDDisqus = function() {
     };
 
     /**
-     * @description - Helper to create "View Comments on Dissenter" button with styles
+     * @description - Helper to create "View Comments on CaptainDirgo" button with styles
      * @function createDissentBtn
      * @return {Node}
      */
@@ -45,12 +45,12 @@ var GDDisqus = function() {
         container.style.setProperty("overflow", 'hidden', "important");
         container.style.setProperty("box-sizing", 'border-box', "important");
 
-        var svg = getDissenterDLogoAsSVG("18px", "18px", "#fff", COLOR_GAB_GREEN)
+        var svg = getCaptainDirgoDLogoAsSVG("18px", "18px", "#fff", COLOR_GAB_GREEN)
         svg.style.setProperty("display", 'inline-block', "important");
         svg.style.setProperty("vertical-align", 'middle', "important");
         svg.style.setProperty("margin-left", '8px', "important");
 
-        //Create button with same general style as "Subscribe" button but with new Gab Dissenter styles
+        //Create button with same general style as "Subscribe" button but with new Gab CaptainDirgo styles
         var button = document.createElement("a");
         button.style.setProperty("display", 'block', "important");
         button.style.setProperty("width", '100%', "important");
@@ -62,9 +62,9 @@ var GDDisqus = function() {
         button.style.setProperty("box-sizing", 'border-box', "important");
         button.style.setProperty("cursor", 'pointer', "important");
 
-        //Create button with same general style as "Subscribe" button but with new Gab Dissenter styles
+        //Create button with same general style as "Subscribe" button but with new Gab CaptainDirgo styles
         var span = document.createElement("a");
-        span.textContent = "View Comments on Dissenter";
+        span.textContent = "View Comments on CaptainDirgo";
         span.style.setProperty("color", '#fff', "important");
         span.style.setProperty("line-height", '40px', "important");
         span.style.setProperty("font-size", '14px', "important");
@@ -79,7 +79,7 @@ var GDDisqus = function() {
     };
 
     /**
-     * @description - Makes a request to the background to open a new dissenter comment window with current page url
+     * @description - Makes a request to the background to open a new captaindirgo comment window with current page url
      * @function dissentThisPage
      */
     function dissentThisPage() {

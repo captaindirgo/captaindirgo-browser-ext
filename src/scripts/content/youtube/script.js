@@ -1,5 +1,5 @@
 /**
- * @description - Gab Dissenter - Youtube content script
+ * @description - Gab CaptainDirgo - Youtube content script
  */
 var GDYoutube = function() {
     //Global scope
@@ -51,12 +51,12 @@ var GDYoutube = function() {
         container.style.setProperty("overflow", 'hidden', "important");
         container.style.setProperty("box-sizing", 'border-box', "important");
 
-        var svg = getDissenterDLogoAsSVG("18px", "18px", "#fff", COLOR_GAB_GREEN)
+        var svg = getCaptainDirgoDLogoAsSVG("18px", "18px", "#fff", COLOR_GAB_GREEN)
         svg.style.setProperty("display", 'inline-block', "important");
         svg.style.setProperty("vertical-align", 'middle', "important");
         svg.style.setProperty("margin-right", '8px', "important");
 
-        //Create button with same general style as "Subscribe" button but with new Gab Dissenter styles
+        //Create button with same general style as "Subscribe" button but with new Gab CaptainDirgo styles
         var button = document.createElement("a");
         button.style.setProperty("display", 'inline-block', "important");
         button.style.setProperty("width", '100%', "important");
@@ -89,7 +89,7 @@ var GDYoutube = function() {
     };
 
     /**
-     * @description - Makes a request to the background to open a new dissenter comment window with current page url
+     * @description - Makes a request to the background to open a new captaindirgo comment window with current page url
      * @function dissentThisVideo
      */
     function dissentThisVideo() {
