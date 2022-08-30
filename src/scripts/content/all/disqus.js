@@ -50,7 +50,7 @@ var GDDisqus = function() {
         svg.style.setProperty("vertical-align", 'middle', "important");
         svg.style.setProperty("margin-left", '8px', "important");
 
-        //Create button with same general style as "Subscribe" button but with new Gab CaptainDirgo styles
+        //Create button with same general style as "Subscribe" button but with new Cptd CaptainDirgo styles
         var button = document.createElement("a");
         button.style.setProperty("display", 'block', "important");
         button.style.setProperty("width", '100%', "important");
@@ -62,7 +62,7 @@ var GDDisqus = function() {
         button.style.setProperty("box-sizing", 'border-box', "important");
         button.style.setProperty("cursor", 'pointer', "important");
 
-        //Create button with same general style as "Subscribe" button but with new Gab CaptainDirgo styles
+        //Create button with same general style as "Subscribe" button but with new Cptd CaptainDirgo styles
         var span = document.createElement("a");
         span.textContent = "View Comments on CaptainDirgo";
         span.style.setProperty("color", '#fff', "important");

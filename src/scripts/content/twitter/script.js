@@ -1,5 +1,5 @@
 /**
- * @description - Gab CaptainDirgo - Twitter content script
+ * @description - Cptd CaptainDirgo - Twitter content script
  */
 var GDTwitter = function() {
     //Global scope

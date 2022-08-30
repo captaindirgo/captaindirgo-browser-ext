@@ -1,5 +1,5 @@
 /**
- * @description - GDEStorage - Gab CaptainDirgo Extension Storage
+ * @description - GDEStorage - Cptd CaptainDirgo Extension Storage
  */
 function GDEStorage() {
     //Global scope

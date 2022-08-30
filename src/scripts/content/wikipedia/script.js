@@ -1,5 +1,5 @@
 /**
- * @description - Gab CaptainDirgo - Wikipedia content script
+ * @description - Cptd CaptainDirgo - Wikipedia content script
  */
 var GDWikipedia = function() {
     //Global scope
@@ -57,7 +57,7 @@ var GDWikipedia = function() {
         svg.style.setProperty("vertical-align", 'top', "important");
         svg.style.setProperty("margin-right", '8px', "important");
 
-        //Create button with same general style as "Subscribe" button but with new Gab CaptainDirgo styles
+        //Create button with same general style as "Subscribe" button but with new Cptd CaptainDirgo styles
         var button = document.createElement("a");
         button.style.setProperty("display", 'block', "important");
         button.style.setProperty("width", '100%', "important");

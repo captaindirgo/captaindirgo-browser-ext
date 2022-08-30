@@ -49,7 +49,7 @@ gulp.task('styles', function() {
                 .pipe(sass())
                 .pipe(postcss([autoprefixer()]))
                 .pipe(cleanCSS())
-                .pipe(insert.prepend(`/* Automatically generated file. Do not edit directly.\nCopyright (C) 2019 Gab AI, Inc.\nAll Rights Reserved */\n`))
+                .pipe(insert.prepend(`/* Automatically generated file. Do not edit directly.\nCopyright (C) 2019 Cptd AI, Inc.\nAll Rights Reserved */\n`))
                 .pipe(gulp.dest(`${savePath}/${fileName}`))
                 .on('error', err => {
                     reject(err);
@@ -137,7 +137,7 @@ gulp.task('scripts', () => {
                 .pipe(uglify({
                     mangle: {},
                 }))
-                .pipe(insert.prepend(`/* Automatically generated file. Do not edit directly.\nCopyright (C) 2019 Gab AI, Inc.\nAll Rights Reserved */\n`))
+                .pipe(insert.prepend(`/* Automatically generated file. Do not edit directly.\nCopyright (C) 2019 Cptd AI, Inc.\nAll Rights Reserved */\n`))
                 .pipe(gulp.dest(`${savePath}/${fileName}`))
                 .on('error', err => {
                     reject(err);
@@ -239,7 +239,7 @@ gulp.task('html', () => {
                     name: `${fileName}.html`,
                     verbose: true,
                 }))
-                .pipe(insert.prepend(`<!-- Automatically generated file. Do not edit directly.\nCopyright (C) 2019 Gab AI, Inc.\nAll Rights Reserved -->\n`))
+                .pipe(insert.prepend(`<!-- Automatically generated file. Do not edit directly.\nCopyright (C) 2019 Cptd AI, Inc.\nAll Rights Reserved -->\n`))
                 .pipe(gulp.dest(`${browser.path}/${fileName}`))
                 .on('error', err => {
                     reject(err);

@@ -1,5 +1,5 @@
 /**
- * @description - Gab CaptainDirgo - Reddit content script
+ * @description - Cptd CaptainDirgo - Reddit content script
  */
 var GDReddit = function() {
     //Global scope

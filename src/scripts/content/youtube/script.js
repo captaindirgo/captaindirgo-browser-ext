@@ -1,5 +1,5 @@
 /**
- * @description - Gab CaptainDirgo - Youtube content script
+ * @description - Cptd CaptainDirgo - Youtube content script
  */
 var GDYoutube = function() {
     //Global scope
@@ -56,7 +56,7 @@ var GDYoutube = function() {
         svg.style.setProperty("vertical-align", 'middle', "important");
         svg.style.setProperty("margin-right", '8px', "important");
 
-        //Create button with same general style as "Subscribe" button but with new Gab CaptainDirgo styles
+        //Create button with same general style as "Subscribe" button but with new Cptd CaptainDirgo styles
         var button = document.createElement("a");
         button.style.setProperty("display", 'inline-block', "important");
         button.style.setProperty("width", '100%', "important");

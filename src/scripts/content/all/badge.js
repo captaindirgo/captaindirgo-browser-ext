@@ -1,5 +1,5 @@
 /**
- * @description - Gab CaptainDirgo - Badge content script
+ * @description - Cptd CaptainDirgo - Badge content script
  */
 var GDBadge = function() {
     //Global scope

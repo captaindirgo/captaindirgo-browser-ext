@@ -69,7 +69,7 @@ const edge = new Browser({
     manifestMap: {
         "background.persistent": false,
         "version": "0.1.8",
-        "author": "Gab.com",
+        "author": "Cptd.com",
         "options_ui": {
             "page": "options/options.html",
             "browser_style": true,
