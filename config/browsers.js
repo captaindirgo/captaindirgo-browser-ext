@@ -11,7 +11,7 @@ const chrome = new Browser({
         MESSENGER: 'extension',
     },
     manifestMap: {
-        "background.persistent": false,
+	"manifest_version": 3,
         "offline_enabled": false,
         "version_name": "0.1.9",
         "version": "0.1.9",
@@ -36,6 +36,7 @@ const firefox = new Browser({
         MESSENGER: 'runtime',
     },
     manifestMap: {
+	"manifest_version": 2,
         "version": "0.1.10",
         "sidebar_action": {
             "default_title": "CaptainDirgo",
@@ -67,7 +68,7 @@ const edge = new Browser({
         MESSENGER: 'runtime',
     },
     manifestMap: {
-        "background.persistent": false,
+	"manifest_version": 3,
         "version": "0.1.8",
         "author": "Cptd.com",
         "options_ui": {
@@ -91,6 +92,7 @@ const safari = new Browser({
         CONTEXT_MENUS: 'menu',
     },
     manifestMap: {
+	"manifest_version": 2,
     },
 });
 

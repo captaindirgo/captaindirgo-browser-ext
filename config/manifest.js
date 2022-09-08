@@ -1,5 +1,4 @@
 module.exports = manifest = {
-    "manifest_version": 2,
     "name": "CaptainDirgo Extension",
     "short_name": "CaptainDirgo",
     "description": "CaptainDirgo is the comment section of the Internet.",
@@ -24,11 +23,6 @@ module.exports = manifest = {
                 "mac": "Alt+Shift+D"
             }
         }
-    },
-    "background": {
-        "scripts": [
-            "background/background.js"
-        ]
     },
     "content_scripts": [
         {

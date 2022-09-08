@@ -27,7 +27,7 @@ function setObjectValueWithPath(object, path, value) {
  */
 gulp.task('styles', function() {
     //Modules
-    const sass = require('gulp-sass');
+    const sass = require('gulp-sass')(require('sass'));
     const cleanCSS = require('gulp-clean-css');
     const sourcemaps = require('gulp-sourcemaps');
     const concat = require('gulp-concat');
@@ -134,9 +134,10 @@ gulp.task('scripts', () => {
                 .pipe(insert.prepend(`var BROWSER_CONFIG = ${browserConfig};`))
                 .pipe(replace('__BROWSER__', browser.scriptVariableMap.BROWSER))
                 .pipe(replace('__CONTEXT_MENUS__', browser.scriptVariableMap.CONTEXT_MENUS))
-                .pipe(uglify({
-                    mangle: {},
-                }))
+	    // co: we want to be able to read this shit at first at least
+                // .pipe(uglify({
+                //     mangle: {},
+                // }))
                 .pipe(insert.prepend(`/* Automatically generated file. Do not edit directly.\nCopyright (C) 2019 Cptd AI, Inc.\nAll Rights Reserved */\n`))
                 .pipe(gulp.dest(`${savePath}/${fileName}`))
                 .on('error', err => {
