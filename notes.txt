@@ -97,9 +97,7 @@ I was thinking about adding the ability to know how many comments were posted fo
 
 One problem is that for privacy purposes, you don't want the extension looking up every url the user goes to against the server. So, only when the click the extension button do you want the client to ask the server about an individual url.
 
-In order to solve this, I came up with an idea. First the extensio would hash the url using a secure hash algorithm, such as SHA-256, then send, lets say, the first 2 bytes of the hash to the server. This would reduce the number of possible urls that match the hash on average to 1/(256*256) = 1/65536. Then, if the resulting list is small enough, the server could just send all the matching urls along with a total comment count for each. If it's not small enough, then that server would just ask for another byte. By doing it this way, there is no way to determine what url the user went to with only 2 bytes of a sha-256 hash. I mean, literally the client would be sending a string such as "3f" to the server, and there is no way to guess what url the user went to from this.
-
-I was also thinking of how to integrate with websites that want to sign up easily. Using the plugin, I can open up any url, including the cookies that are active. So all the website would have to do put a page in the logged-in area of the website that signs the brower-extensions pub key for the user, along with the username and maybe an icon or something. If the user is not logged in, the extension can redirect them to a login page, or open it in a popup window or something and try again afterwards. Then the backend servers for captaindirgo would be able to verify that the user had signed into the site.
+In order to solve this, I came up with an idea. First the extensio would hash the url using a secure hash algorithm, such as SHA-256, then send, lets say, the first 2 bytes of the hash to the server. This would reduce the number of possible urls that match the hash on average to 1/(256*256) = 1/65536. Then, if the resulting list is small enough, the server could just send all the matching urls along with a total comment count for each. If it's not small enough, then that server would just ask for another byte. By doing it this way, there is no way to determine what url the user went to with only 2 bytes of a sha-256 hash. I mean, literally the client would be sending a string such as "3f" to the server, and there is no way to guess what url the user went to from this. I was also thinking of how to integrate with websites that want to sign up easily. Using the plugin, I can open up any url, including the cookies that are active. So all the website would have to do put a page in the logged-in area of the website that signs the brower-extensions pub key for the user, along with the username and maybe an icon or something. If the user is not logged in, the extension can redirect them to a login page, or open it in a popup window or something and try again afterwards. Then the backend servers for captaindirgo would be able to verify that the user had signed into the site.
 
 Although, I need to check if there are more standard ways to do this, because if there are prebuilt plugins that work with the website, it would make the website owner and my life a whole lot easier.
 
@@ -108,4 +106,23 @@ For the backend servers, I think I want to make them completely separate from th
 Additionally, anyone could run a backend application without running a website if they wanted to, too.
 
 But that's just my thinking at the moment and could change. My first priority is to get a prototype done, so I can get some feedback on the UI.
+
+2022/9/11
+
+Didn't get much sleep last night. Felt a little off because of it I so did some grunt work. I came up with an initial logo, pretty basic, but it'll do for now.
+I also setup gpg for email and initial github repository and updated the README. Here it is: https://github.com/captaindirgo/captaindirgo-browser-ext
+
+From now on I'm going to post status updates there as well as here, in order to increase visibility for the extension and hopefully get other people that want to help to notice.
+
+Went through some more of the svelte tutorial. I think I'll wait until tomorrow or even later before I try to start working on a design/implementing the prototype proper.
+
+I was thinking about the design some more. By default all urls that are sent from the extension should be securely hashed, without the original url ever being known by the server. This will again help user privacy, since even if you have access to the server, you can only tell the website users were commenting on if you happen to guess the url, or brute force it. In addition, I can even use the url with a salt appended to encrypt the comments. In this way, in addition to not knowing what the url is, you couldn't even read the comments unless you knew the url beforehand.
+
+The extension will also always remove all the data after the '?' in a url before hashing it and sending it to a server. Anything after the '?' is where all the personal info is supposed to go. But incase a website developer is stupid enough to design their urls like http://foo.com/<userid>/<account>/<password>/<ssn>/<... other personal details, etc. ...>/, then because of the above, regardless if the user comments on it, the url won't be visible to anyone else including the server owner. 
+
+The above is something the original gab dissenter plugin didn't do, BTW. Anytime a user commented the original dissenter sent everything before the '?' in the url to the gab owned server. I guess they did that so they could maintain a list of 'hot' urls where everyone was commenting to show everyone, like the "trending" data on twitter. I could probably do something like that by having a threshold where if, for example, over 50 users commented on a url, then the next time a user commented on it, it would be released in plaintext to the server. But it'd be kind of messy to implement, and there is a security hole because the server could just lie and tell the extension that 50 users commented on it, so they would release the plain text.
+
+I thought of other idea to help prevent spam by a great deal but I'm too tired today so I think wouldn't be able to explain it well, so I will wait until tomorrow.
+
+Thanks for listening.
 
