@@ -1,0 +1,111 @@
+What about p2p model?
+
+Each node on the service would have a private/public key pair
+
+Messages would be sent back and forth. Messages such as:
+get_comments -- given a url get comments
+get_username -- get a username for a pubkey
+
+each public key has a txn chain regarding operations on it.
+such as:
+post_comment
+upvote
+downvote
+trust -- trust other user
+untrust
+each url would be a set of users that posted to it.
+
+2022/09/04
+
+Today, I'm fasting so I'm making an earlier log entry before I lose all my mental energy.
+
+I've been looking at p2p lately. I thought about it, and using a centralized p2p forum to power the thing seems to be going down a rabbithole. First because of what I've seen the stuff that's out there is very bloated, poorly documented, and hard to customize, and since I'm a beginner it makes it even more so. Besides, even if I were to succeed, then so what? All I'd get out of it is a good prototype, but I'd still have to move to somethig more decentralized.
+
+So, I'm shifting gears and going p2p again. Maybe it's obvious, but I realized when trying to understand what a library does, it's best to look at its dependencies first, so if I want to understand hypercore, I look and see it depends on hyperstream and secret-stream, and then look to see that hyperstream depends on hyperstream/dht, etc. Then I just look at dht and secretstream and then go upwards from there.
+
+So, from what I found, there is no way to create a p2p network without any fixed addresses. Even magnet links have bootstrapping nodes hardcoded in the client. So what I plan to do is to piggyback on bittorrent's magnet protocol. That way, in order to knock out captain dirgo through DHT, you'd have to knock out the whole bittorrent infrastructure.
+
+The big elephant in the room then is spam. There are a couple of projects I want to look at that are also based on hypercore that would have to deal with spam, that I want to look at to get ideas. One is https://github.com/Telios-org which is a p2p email service, and the other is https://cabal.chat/ which is a p2p chat network. I found these here: https://dat-ecosystem.org/
+
+My own idea is to use something like hashcash, so that to post a message, you'd have to mine some data akin to a bitcoin miner. This would be as light as possible, for a url with zero comments, or few views, maybe mining wouldn't be needed at all, but one with a lot of comments, you would have to mine for awhile. Also along with that, having trust networks, so that if your user is trusted by another node on the network it could post without mining.  That other node would have rules, such as having to solve a captcha to initialize the node, and other rules like not posting too quickly.
+
+In the end, its up to each individual user about what messages they want to see or not, so when using the extension you could personally dial in how much spam you are willing to tolerate.
+
+2022/09/05
+
+Didn't have a lot of time today.
+
+Read about Mainline DHT. I think it will work nicely for Captain Dirgo, just present it like a regular torrent with the name "captaindirgo". But when clients connect, they would use captain dirgo's protocol rather than bittorrent.
+
+Started working on adding webtorrent/dht to the extension. This will allow the extension to bootstrap from the regular magnet network that bittorrent uses. Should be pretty hard to shut down.
+
+Played around with web-ext so that I can more easily write a extension working in both chromium and firefox.
+
+2022/9/7
+
+Worked on understanding webpack. I know I am dicking around with a lot of tools, but in the end I think the increased productivity will be worth it.
+
+I understand it pretty well, and it beats everything else that I've seen. It works kind of like java compilation, in that when you require one file from another, it will automatically build the dependency.
+
+Also looked into using lbry as a backend. I'm somewhat skeptical of it for my use case, since it seems to be built around serving static files (ie videos and images). Since captain dirgo is going to be dynamic in that comments are added whenever anyone wants to, I don't think it would work well.
+
+I was thinking about the project last night. Below are some notes, but with the caveat that these are only ideas and I'm not committed to implementing them:
+
+ - I think it should have  a blockchain, so there is a consistent state between all peers. But I don't think it needs mining or a coin. It will have lightweight clients and heavyweight clients, and servers (also heavy weights)
+ - Heavyweights can read and provide any part of the blockchain
+ - Merkle tree backing 
+ - Servers compute final state. (This comment voted up/down, blocked, etc.) And can be queried for state.
+ - Users can choose to trust the servers they want.
+ - So captaindirgo.com would be a server.
+ - Hopefully other people will want to be servers. Websites can also be servers. Benefits would be to draw traffic to their website. This would make captaindirgo harder to kill, because you'd have to kill all the servers. (Also a server doesn't have to have a website, it could be spun up by anybody)
+ - Servers could also vouch for users, using email verification, captchas, etc. If a user trusts a particular server, comments vouched by that server would float to the top. This way servers can eliminate spam, but not in a way where they are able to censor the network.
+ - Servers could also validate keys with user names. So, a user could have a specific icon next to it indicating that a server has vouched for it (much like a twitter blue check, but each server has their own icon and users could choose which ones they trust).
+ - Blocked messages can be stored as just their hash, so that an illegal message, such as a dox or call for violence, can be removed from the blockchain by a particular server (this won't prevent other servers from keeping the data, however).
+
+Status Update 2022/9/8
+
+I just today realized that DHT will not work in the browser, feel kind of stupid about it.
+
+Webtorrent, however, is somehow resolving magnet links within the browser, so I need to
+parse the source code to figure out it does so. This way, hopefully I can piggyback on
+another service to have a more decentralized way of finding captaindirgo servers.
+
+I saw this pretty good discussion on persistent service workers:
+
+https://stackoverflow.com/questions/66618136/persistent-service-worker-in-chrome-extension
+
+With the new service-worker model that chrome has and mozilla is moving to, I don't think
+I can create a persistent peer for a hyperswarm network within the extension without
+resorting to some hacks. So I wonder what is the point of a p2p network like that.
+
+Other than looking into this p2p stuff, I started setting up a webpack framework for 
+captaindirgo-extension.
+
+2022/9/10
+
+While searching for examples, came across a template for browser extensions. It's the only one that I tried that worked with no errors, and has all the features I want. Hopefully it will save me a lot of time: https://github.com/davidnguyen179/web-extension-svelte-boilerplate
+
+I was able to get it compile out of the box and run in both chromium and firefox.
+
+It's using a framework called svelte which seems pretty cool. I took a look at it and it's a lot easier to use than react and vue and should be faster and less bloated because it generates javascript at compile time rather than runtime like react/vue does.
+
+So today, I went through the tutorial on svelte, and I think this is what I'll use for the extension frontend if nothing goes wrong. I think by learning this framework will be the fastest way for me to create a prototype.
+
+I again didn't get to work too much again, unfortunately, due to having to do some errands around the house.
+
+I was thinking about adding the ability to know how many comments were posted for a website even before clicking on the extension, by making the total show up in the extension icon.
+
+One problem is that for privacy purposes, you don't want the extension looking up every url the user goes to against the server. So, only when the click the extension button do you want the client to ask the server about an individual url.
+
+In order to solve this, I came up with an idea. First the extensio would hash the url using a secure hash algorithm, such as SHA-256, then send, lets say, the first 2 bytes of the hash to the server. This would reduce the number of possible urls that match the hash on average to 1/(256*256) = 1/65536. Then, if the resulting list is small enough, the server could just send all the matching urls along with a total comment count for each. If it's not small enough, then that server would just ask for another byte. By doing it this way, there is no way to determine what url the user went to with only 2 bytes of a sha-256 hash. I mean, literally the client would be sending a string such as "3f" to the server, and there is no way to guess what url the user went to from this.
+
+I was also thinking of how to integrate with websites that want to sign up easily. Using the plugin, I can open up any url, including the cookies that are active. So all the website would have to do put a page in the logged-in area of the website that signs the brower-extensions pub key for the user, along with the username and maybe an icon or something. If the user is not logged in, the extension can redirect them to a login page, or open it in a popup window or something and try again afterwards. Then the backend servers for captaindirgo would be able to verify that the user had signed into the site.
+
+Although, I need to check if there are more standard ways to do this, because if there are prebuilt plugins that work with the website, it would make the website owner and my life a whole lot easier.
+
+For the backend servers, I think I want to make them completely separate from the frontend servers. So if you run a website, you can allow your userbase to use the captain dirgo plugin by only building out the signing page. The storage of comments would happen automatically. And if you want to help out by running a backend server, you can do that, too, by running a completely different application, that connects to a p2p network for the captain dirgo backend.
+
+Additionally, anyone could run a backend application without running a website if they wanted to, too.
+
+But that's just my thinking at the moment and could change. My first priority is to get a prototype done, so I can get some feedback on the UI.
+

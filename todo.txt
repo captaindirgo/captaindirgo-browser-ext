@@ -1,0 +1,3 @@
+Give credit to webtemplate:  https://github.com/davidnguyen179/web-extension-svelte-boilerplate
+
+Make a canary

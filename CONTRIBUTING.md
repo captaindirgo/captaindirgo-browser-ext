@@ -8,7 +8,7 @@ We want to make contributing to this project as easy and transparent as possible
 - Becoming a maintainer
 
 ## We Use [Github Flow](https://guides.github.com/introduction/flow/index.html), So All Code Changes Happen Through Pull Requests
-Pull requests are the best way to propose changes to the codebase (we use [Github Flow](https://guides.github.com/introduction/flow/index.html)). We actively welcome your pull requests:
+Pull requests are the best way to propose changes to the codebase (we use [Github Flow](https://docs.github.com/en/get-started/quickstart/github-flow)). We actively welcome your pull requests:
 
 1. Fork the repo and create your branch from `master`.
 2. Run all of the necessary Build Process and Configuration steps.
