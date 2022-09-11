@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="132.89719mm"
+   height="120.04625mm"
+   viewBox="0 0 132.89719 120.04625"
+   version="1.1"
+   id="svg5"
+   inkscape:export-filename="cd_icon.svg"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="mm"
+     showgrid="false" />
+  <defs
+     id="defs2">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient2608">
+      <stop
+         style="stop-color:#3039f9;stop-opacity:1;"
+         offset="0"
+         id="stop2604" />
+      <stop
+         style="stop-color:#58b83e;stop-opacity:1;"
+         offset="1"
+         id="stop2606" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient2608"
+       id="linearGradient2610"
+       x1="32.494541"
+       y1="92.105347"
+       x2="189.10094"
+       y2="92.105347"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.84860637,0,0,0.81118136,33.943707,22.377505)" />
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Layer 2"
+     transform="translate(-61.51878,-37.068516)">
+    <rect
+       style="fill:url(#linearGradient2610);fill-opacity:1;stroke:none;stroke-width:0.323979;stroke-dasharray:none"
+       id="rect1012"
+       width="132.89719"
+       height="120.04625"
+       x="61.51878"
+       y="37.068516"
+       inkscape:label="rect1012" />
+  </g>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-61.51878,-37.068516)">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:Ecolier_court;-inkscape-font-specification:'Ecolier_court, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;inline-size:13.6133;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.0593488;stroke-dasharray:none;stroke-opacity:1"
+       x="47.917728"
+       y="47.956135"
+       id="text113"
+       transform="matrix(17.540365,0,0,17.540365,-745.80647,-724.92552)"><tspan
+         x="47.917728"
+         y="47.956135"
+         id="tspan5056">CD
+</tspan></text>
+  </g>
+</svg>
