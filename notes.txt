@@ -124,5 +124,16 @@ The above is something the original gab dissenter plugin didn't do, BTW. Anytime
 
 I thought of other idea to help prevent spam by a great deal but I'm too tired today so I think wouldn't be able to explain it well, so I will wait until tomorrow.
 
-Thanks for listening.
+Thanks for reading.
+
+2022/9/12
+
+Today I spent the majority of my time going through some more of the svelte tutorial. I started at chapter 5 and now am through 10. There are 19 chapters in total, and I think after I've gone through them all I should be able to start hammering out a gui.
+
+I also want to come up with a handwritten mockup of the components, which I will try to work on tomorrow, not sure when I'll finish. I'll upload it here when it's done.
+
+I realized my idea that I didn't explain yesterday to prevent spam wouldn't work, so I won't hash it out here.
+
+
+
 
