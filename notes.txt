@@ -134,6 +134,17 @@ I also want to come up with a handwritten mockup of the components, which I will
 
 I realized my idea that I didn't explain yesterday to prevent spam wouldn't work, so I won't hash it out here.
 
+2022/9/13
 
+Finished svelete tutorial. I found a basic comments widget in svelte here: https://github.com/loganwoolf/svelte-comments It's a little basic, being developed to win a contest, but that should make it easier to read and modify.
 
+I was thinking of trying to draw out a design, and other documents yesterday, but I don't know if I really need any of this to get started, as long as I have it laid out in my mind.
+
+So I'm just going to get started and start coding and experimenting and iterate from there.
+
+Learned about https://msgpack.org/index.html which I might adopt for communication between nodes.
+
+Started work on getting an options page up for the extension. Figured that will be a good starting point because everything else is going to need to use it to get user preferences.
+
+Learned about jest, which is a testing framework and was already part of the template that I'm using. Will try to make good use of it.
 
