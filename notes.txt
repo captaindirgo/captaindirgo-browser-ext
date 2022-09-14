@@ -148,3 +148,22 @@ Started work on getting an options page up for the extension. Figured that will 
 
 Learned about jest, which is a testing framework and was already part of the template that I'm using. Will try to make good use of it.
 
+2022/9/14
+
+Learned some UI stuff, flexblox, browser storage, svelte storage.
+
+I wanted to work on an options page for the extension, but I didn't really want to write a page of fake options since I wasn't sure what I needed, so I decided to delve more into the backend so I had an idea of what I would need.
+
+I read the bittorrent spec and the hypercore whitepaper. Strangely bittorrent seemed more
+advanced as far as preventing dos, even though its much older. It has choking to prevent peers from asking for too much data too quickly, and a draft proposal called "Canonical Peer Priority" which helps spread out the node connections. hypercore has built in encryption, but I didn't find it so useful, since everything is going to be encrypted anyway.
+
+I guess bittorrent has been around a long time and therefore had more time to workout all the flaws.
+
+I also looked more into browser based implementations of hypercore and bittorent. There was RangerMauve's implementation of hypercore, which just seems to route all data through a proxy, as far as I could tell reading the source code. The documentation wasn't very clear. This would mean it's basically useless as a p2p network.
+
+I also came across https://github.com/draeder/easypeers which is short little 200 line project that establishes a webtorrent webrtc network. I was able to get it to work both in the browser and nodejs so it seems like a good place to start.
+
+So, I'm leaning towards the webtorrent protocol. I think I'm going to separate the data out per url. This way, anyone who runs the extension can help the network out, and have a cache of comments for recently visited sites, by storing the comments and other data associated to the urls they visit.
+
+
+
