@@ -150,7 +150,7 @@ Learned about jest, which is a testing framework and was already part of the tem
 
 2022/9/14
 
-Learned some UI stuff, flexblox, browser storage, svelte storage.
+I learned some UI stuff, flexblox, browser storage, svelte storage.
 
 I wanted to work on an options page for the extension, but I didn't really want to write a page of fake options since I wasn't sure what I needed, so I decided to delve more into the backend so I had an idea of what I would need.
 
@@ -165,5 +165,38 @@ I also came across https://github.com/draeder/easypeers which is short little 20
 
 So, I'm leaning towards the webtorrent protocol. I think I'm going to separate the data out per url. This way, anyone who runs the extension can help the network out, and have a cache of comments for recently visited sites, by storing the comments and other data associated to the urls they visit.
 
+2022/9/15
 
+Here is some thinking about the project that I was doing:
 
+Lets say that the extension derives a private/public keypair based on the url, and the sends the public key to the server.
+
+It then uses the private key to encrypt the comment(if its adding a comment) and sign the entire message that is sent to the network to be stored by server nodes
+
+We can't allow a client to send data willy nilly because they could overwhelm the network with data, and create a ton of messages everywhere, drowning out legitimate conversion.
+
+So we have to have some rules on the server nodes.
+
+We will have a web of trust. So there will be an ultimate trust certificate. It can give trust to other websites, attaching a score from 1 to 0 representing a level of trust. certs can then trust other certs and so on and so on and to determine the final trust level, simply multiple the scores down the path off signed certs.
+
+Then based on this score, the extension can decide whether to display a particular message, the server node can decide whether to accept a message from a peer, etc.
+
+Each user needs to sign into captaindirgo.com. It will have a captcha and a email verifier or something.
+
+Sign in will provide a signed message containing a date, with an expiration and a username.
+
+When users post messages, they provide that signed message along with their message.
+
+Server nodes verify this message. They can then have other rules, like post once a minute or something like that.
+
+---
+
+Today I searched the web for projects to help me get a initial website for signing in working. The idea here is to give the extension some sort of server to start the login process. 
+
+I looked across a lot of different examples. It seemed that every one referenced completely different frameworks and helper libraries from each other. Everything is so fragmented and it's really painful to have to learn another library/framework/web server everytime I want to add something to this project.
+
+I found https://github.com/shinokada/svelte-auth seemed pretty good. It doesn't use a lot of different libraries, frameworks, etc. that I don't know about and the demo is pretty advanced. https://svelte-auth-codewithshin.vercel.app/
+
+It turns out that hyperswarm-web only uses the proxy to bridge webrtc networks and regular peers. Also, https://github.com/geut/discovery-swarm-webrtc has a swarm just for web-rtc which I think will work good for this projects.
+
+I also got started with visual studio code. I was using emacs but I think I should try something more modern.
