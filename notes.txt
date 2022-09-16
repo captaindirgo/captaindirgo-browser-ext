@@ -200,3 +200,13 @@ I found https://github.com/shinokada/svelte-auth seemed pretty good. It doesn't 
 It turns out that hyperswarm-web only uses the proxy to bridge webrtc networks and regular peers. Also, https://github.com/geut/discovery-swarm-webrtc has a swarm just for web-rtc which I think will work good for this projects.
 
 I also got started with visual studio code. I was using emacs but I think I should try something more modern.
+
+2022/9/16
+
+I didn't have a lot of time to work today. I looked more into sveltekit. The developers decided to remove a piece of major functionality that everyone was using to define a users session and replace it with something else a couple of weeks ago, but all the examples have yet to be updated.
+
+So I had to try and read and understand this one git discussion thread on this new functionality with no examples to work from. I think I can do some experiments and get it to work, but I don't like the way sveltekit is being developed. It's seems ripe to have bugs or easy to misconfigure and get hacked.
+
+I'm kind of tired now, so I'll think about it tomorrow. I think I need to understand it at a deeper level, I suppose, to really get a good opinion on it. Of course I'd be wasting time understanding this new architecture if I do that and it turns out to be crap.
+
+I thought I was getting a leg up on the whole svelte thing by using it in the server, because I'm pretty sure I'm going to use in the extension code. Also having a nice framework to work from opens possiblities for captaindirgo.com to have more functionality than if I use something simpler. So, we'll see.
