@@ -210,3 +210,25 @@ So I had to try and read and understand this one git discussion thread on this n
 I'm kind of tired now, so I'll think about it tomorrow. I think I need to understand it at a deeper level, I suppose, to really get a good opinion on it. Of course I'd be wasting time understanding this new architecture if I do that and it turns out to be crap.
 
 I thought I was getting a leg up on the whole svelte thing by using it in the server, because I'm pretty sure I'm going to use in the extension code. Also having a nice framework to work from opens possiblities for captaindirgo.com to have more functionality than if I use something simpler. So, we'll see.
+
+2022/9/17
+
+I'm still playing around with svelte. There is a user session manager that is stateless on the server side. It works by having the server encrypt a token containing session information to the client which then returns it back as a cookie. Seemed kind of cool and I thought I might use it simply because it shows some working encryption using nodejs which should help me out when I get to the other pieces. It's here: https://github.com/pixelmund/svelte-kit-cookie-session
+
+I'm trying to get a clearer picture of the separation of client and server within the system. It seems that the main workflow is that for each page the browser loads some preferably static page with javascript and then uses a separate fetch to retrieve dynamic information. At first I thought that was not a great idea, because it involves two round trips, but it makes sense from a certain viewpoint. If you create a page with a nice "loading..." mode and fetch the data afterwards with javascript, it would seem faster to the user, because something gets displayed right away.
+
+I'm not planning on using captaindirgo.com for much, just an overview of the extension, how to download it, and a page to register and log-in (this will be a proof-of-concept, mainly, because I plan on integrating with other websites afterwards, using oauth or something like that) but it seemed like a logical place to start, because the extension will have to point to something.
+
+2022/9/18
+
+I read more about svelte and sveltekit and I think I have a better handle on it. The one thing the documentation is missing, as far as I am concerned, is a flow of how the processing works.
+
+Off the top of my head, there is a hooks.server.js, a hooks.client.js, a layout.server.js, a layout.js, a page.js and a page.svelte file, and I believe that's everything that is run during a request, but I could be wrong.
+
+There is also a server route that gets called for api requests, initiated by the client. There is a pattern I guess, where layout.server.js, and page.js loads any data from the database or whatever is needed on the server side, and places it in a js object to be automatically serialized and sent to the client.
+
+This all happens at when the page loads. Then, afterwards the client can issue fetch requests and get back serialized objects from json.
+
+That's how I understand it to work. They've recently changed a lot and the examples are not up to date and the documentation is terse. But the framework is pretty good, it seems from my first look at it.
+
+I don't think I'm going to waste my time looking at any more outdated examples, and just try to mess around and get a site up. I'm pretty confident I can make good progress from here on out.
