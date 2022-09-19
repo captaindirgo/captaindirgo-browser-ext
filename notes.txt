@@ -232,3 +232,14 @@ This all happens at when the page loads. Then, afterwards the client can issue f
 That's how I understand it to work. They've recently changed a lot and the examples are not up to date and the documentation is terse. But the framework is pretty good, it seems from my first look at it.
 
 I don't think I'm going to waste my time looking at any more outdated examples, and just try to mess around and get a site up. I'm pretty confident I can make good progress from here on out.
+
+2022/9/19
+
+I worked on getting the website up and working. Didn't get too far in it, but got the nav bar working and an initial main page. I still need to do a login, signup and download page.
+
+I looked at some different ways to deploy the website. I want to get a prototype up, so I hopefully can get some feedback on the design.
+
+I was thinking about the extension itself. If Google and Mozilla don't accept it, it is somewhat difficult to install, involving multiple steps, and going into developer mode. And on windows using chrome, it will nag the user everytime they startup to disable any sideloaded extensions.
+
+However, if I make a version of the extension to work using Tampermonkey, that would sidestep all of that. Tampermonkey is an extension that can run arbritrary scripts to alter web pages. So the user would just have to install tampermonkey, and then install a Captain Dirgo script rather than an extension which should be a lot easier.
+
