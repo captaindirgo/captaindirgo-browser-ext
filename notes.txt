@@ -243,3 +243,13 @@ I was thinking about the extension itself. If Google and Mozilla don't accept it
 
 However, if I make a version of the extension to work using Tampermonkey, that would sidestep all of that. Tampermonkey is an extension that can run arbritrary scripts to alter web pages. So the user would just have to install tampermonkey, and then install a Captain Dirgo script rather than an extension which should be a lot easier.
 
+2022/9/20
+
+Got some more experience with Typescript. Made a couple of interfaces for registration and logging in.
+
+Worked a little on the login page, and I got it to display and basically work.
+
+I also looked into oauth and from first glance it doesn't look like it will work. I'm looking for something where the website can sign an authorization that can be verified out of bounds by the p2p network. As far as I can tell, oauth used a blob token.
+
+Just for curiousity and to try and come up with additional better ideas, I learned about jamstack. I thought about maybe using the p2p network as the backend for the website, but my main concern is to mock up what other websites basically use. This way I can model what I need to do to integrate with them.
+
