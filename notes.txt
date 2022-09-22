@@ -253,3 +253,69 @@ I also looked into oauth and from first glance it doesn't look like it will work
 
 Just for curiousity and to try and come up with additional better ideas, I learned about jamstack. I thought about maybe using the p2p network as the backend for the website, but my main concern is to mock up what other websites basically use. This way I can model what I need to do to integrate with them.
 
+2022/9/21
+
+A bit of a short day, I had to make a fence to block the dog from eating compost.
+
+
+Trying to answer a stupid question. Where can I put a var that represents the db so it is accessible by everyone? Without this I'd have to spin up and shutdown a db connection with each request.
+
+The flagship example sidesteps this by calling an external 'api' url.
+
+I guess that would be connection pooling. But the question remains.
+
+Was able to solve it using https://github.com/sveltejs/kit/issues/1538#issuecomment-848002582
+
+Basically create a promise in hooks.server.ts and that promise will run only once, so it
+will function like a global var. Then stick it into events.local and it will be accessible in the rest of the app.
+
+But it turns out that the mongodb nodejs driver already implements a connection pool, so I problably won't need a global variable (for that anyway). Nice to know though.
+
+I think from here on out, most status updates are going to be about pretty trivial things. When the rubber hits the road, it's the silly little things that take the most time, especially when you are getting up to speed with a language.
+
+
+2022/9/22
+
+From experimentation, it looks like any server side "+page.ts" or similar, only runs once
+per application.
+
+Note to self, to use require within sveltekit, run:
+
+    import { createRequire } from 'node:module';
+    const require = createRequire(import.meta.url);
+
+    // sibling-module.js is a CommonJS module.
+    const fs = require('fs');
+
+I wanted to make a config file in the main directory, but I realized that it won't work there, because sveltekit packages the app before runnig it, so I think it has to go into the src/ directory which is a little weird. 
+
+Looked for authentication libraries for handling user sign in:
+
+https://github.com/Dan6erbond/sk-auth
+Example app is broken: https://github.com/Dan6erbond/sk-auth/issues/94
+Not sure if the rest of it works, since it's based on an older version of sveltekit
+
+https://github.com/pilcrowOnPaper/lucia-sveltekit
+A little complicated to setup.
+From https://lucia-sveltekit.vercel.app/getting-started
+    Apps using Lucia cannot be deployed to edge functions (CloudFlare Workers, Vercel Edge Functions, Netlify Edge Functions) because it has a dependency on Node's crypto module and other Node native APIs.
+
+Tried netlify to see if it applies to me. Netlify seems to work, but since I'm not using the lucia code (only imported it as a dependency), I'm not sure if it's actually going to.
+
+Got an initial site up, sign up does NOT work. Don't expect much, but if you want to see my progress, it here: https://captaindirgo.com
+
+Source code for the web server is now here and is here: https://github.com/captaindirgo/captaindirgo-webapp/
+
+I was thinking about how the network is going to managed. Although, I don't mind being the sole owner of the entire thing, if the ball really starts rolling and it gets big, I don't think it's good to only have me run it. Therefore, I'm thinking of making a sort of trust system.
+
+I wrote about this before, but the idea is that to start off with, there would be one master, me, who would have so many "trust points", lets say 1 million. Then I could give them to others to generate private keys with. In fact captaindirgo.com would obtain a certain limited number of these points, but not all, maybe 1000
+
+In this way, if captaindirgo.com was seized or taken off line, the master key would still hold a majority of points and I'd be able to create a new site, maybe some other way, using tor, etc. to keep the network up.
+
+In addition, eventually I would hope to get other trustworthy people to hold trust points themselves, so that I could give away enough that I am not the single authority ruling the whole system.
+
+This does, of course, sound a lot like a crypto token, and I will have to research more into different crypto networks to see if I can use one to bootstrap this idea, or maybe tweak my idea in order to make the network as resilient as possible.
+
+
+
+
