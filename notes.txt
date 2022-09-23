@@ -316,6 +316,18 @@ In addition, eventually I would hope to get other trustworthy people to hold tru
 
 This does, of course, sound a lot like a crypto token, and I will have to research more into different crypto networks to see if I can use one to bootstrap this idea, or maybe tweak my idea in order to make the network as resilient as possible.
 
+2022/9/23
+
+Got dotenv working, however I think it's not good enough, because I would have to manually check if all the env names I want are there. So instead, I plan to use io-ts which should automate the error checking for me. io-ts will also help with the server api as well.
+
+However there is a problem in that sveltekit seems to have no designated place for instance level configuration files. I asked them on github discussions, and someone told me to put it under "src" which I find kind of silly. It definately makes things confusing, because usually all data under "src" is checked in, and since this file contains secrets, it definately should not.
+
+Learned about csrf attacks, and I think I can manage it. Sveltekit automatically checks the origin header, so that should fix it, I made a todo.txt file and put an entry to test this so I won't forget.
+
+Got a little farther with lucia. I think it will work fine with netlify. I don't know if that will be the final way I'm going to deploy, but for now it makes for a good testing ground.
+
+
+
 
 
 

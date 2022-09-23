@@ -1,3 +1,5 @@
 Give credit to webtemplate:  https://github.com/davidnguyen179/web-extension-svelte-boilerplate
 
 Make a canary
+
+2022/9/23 Check that sveltekit's csrf prevention works as stated here: https://kit.svelte.dev/docs/configuration#csrf Maybe make a test?
