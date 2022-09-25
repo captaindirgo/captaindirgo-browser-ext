@@ -326,6 +326,18 @@ Learned about csrf attacks, and I think I can manage it. Sveltekit automatically
 
 Got a little farther with lucia. I think it will work fine with netlify. I don't know if that will be the final way I'm going to deploy, but for now it makes for a good testing ground.
 
+2022/9/25
+
+Sorry, yesterday I did do some work, but I felt exhausted at the end of the day and didn't want to post anything.
+
+I got the lucia example working after some small fixes. I'd like to have applied it as it was to my code but I was following a different example that does things through javascript and not a simple form submit like lucia does. All these variation, and the code is so messy in everything that I look at. I feel like I'm looking at code made by animals. It's like seeing a mouse nest snuggled underneath the hood of an old automobile and the mice have been rewiring things.
+
+I never knew that frontend code had become so messy, each piece eschewing different older standards while holding on other ones.
+
+So anyway, things are slow but progressing. I installed a new library to handle internationalization but I wonder how useful it really is. It separates the web page from the text and then you have these 2+ files to constantly go back and forth from. I kind of think if I just put everything into each page itself, then it would be easier to deal with.
+
+I'm trying to make sure that everything I work on now will give me experience for when I code the plugin, so that I gain a double benefit. 
+
 
 
 
