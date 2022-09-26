@@ -338,8 +338,18 @@ So anyway, things are slow but progressing. I installed a new library to handle 
 
 I'm trying to make sure that everything I work on now will give me experience for when I code the plugin, so that I gain a double benefit. 
 
+2022/9/26
 
+I finished signup and added a login page, and although rough, they both work well enough. I now have a capable server that can link up with the extension, so I'm going to shift gears a little bit and work on the extension because that is the most important.
 
+I'm thinking about the architecture and how best to implement it. There seems to be 3 layers of security:
 
+1. At the p2p peer level, a peer can be blocked if it's behaving badly and/or spamming.
+2. At the user level, heavyweight peers can refuse to save messages from a user who is spamming data.
+3. At the reporting level, heavyweight nodes can remove messages or block users.
 
+As far as #3 goes, this has to be available to prevent doxx attacks. However, I plan to make it so each heavyweight node makes its own decision what to store and what not to. That way a single entity can't block a comment it doesn't like for everyone, but only for users and heavyweight nodes that place enough trust in it.
 
+I was also thinking about using an existing blockchain. Ordinary users who run the extension obviously would not be full nodes on any currently running well known blockchain, because in order to do so, most chains, if not all, require downloading huge gigabytes of data. So the only reason to use one is for the heavyweight nodes on the network. The biggest benefit that I can see is if the network goes down due to an attack, the data will be stored in a well known place that no authority can take down. The end result is that existing messages would be stored and held as long as that blockchain was still running.
+
+I also need to design this web of trust. I have a basic idea of how it should work. Users and heavyweight node operators decide which authorities they trust in the plugin, ex. captaindirgo.com, xyzcorp.com, etc. Then when a message is received, etc. it comes along with a web of trust. captaindirgo trusts site xyzcorp.com with a score of 0.1 and xyzcorp.com trusts user 'foo' with a score of 0.36, so if the user trusts captaindirgo with a score of 1, then the final trust value would be 1 * 0.1 * 0.36 = 0.036.  But I worry about the speed of verifying these signatures, however if there becomes too many. If the user has to verify thousands of signatures to read the comments on a url, it could get very cpu intensive.
