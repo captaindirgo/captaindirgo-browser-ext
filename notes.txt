@@ -353,3 +353,20 @@ As far as #3 goes, this has to be available to prevent doxx attacks. However, I 
 I was also thinking about using an existing blockchain. Ordinary users who run the extension obviously would not be full nodes on any currently running well known blockchain, because in order to do so, most chains, if not all, require downloading huge gigabytes of data. So the only reason to use one is for the heavyweight nodes on the network. The biggest benefit that I can see is if the network goes down due to an attack, the data will be stored in a well known place that no authority can take down. The end result is that existing messages would be stored and held as long as that blockchain was still running.
 
 I also need to design this web of trust. I have a basic idea of how it should work. Users and heavyweight node operators decide which authorities they trust in the plugin, ex. captaindirgo.com, xyzcorp.com, etc. Then when a message is received, etc. it comes along with a web of trust. captaindirgo trusts site xyzcorp.com with a score of 0.1 and xyzcorp.com trusts user 'foo' with a score of 0.36, so if the user trusts captaindirgo with a score of 1, then the final trust value would be 1 * 0.1 * 0.36 = 0.036.  But I worry about the speed of verifying these signatures, however if there becomes too many. If the user has to verify thousands of signatures to read the comments on a url, it could get very cpu intensive.
+
+2022/9/27
+
+I looked back at hyperswarm-web, discovery-web, etc. but wasn't really getting it. So, I decided to investigate more about WebRTC. I thought it was just some protocol that opened tcp sockets and had a library tacked on for video and audio, etc. But I was very wrong.
+
+First, it uses UDP and second it has a lot of functionality to burrow through firewalls, nat routers, and other restricted network environments. It seems to me that it would make it possible for anyone to run a full node on the captaindirgo network by simply opting-in through the browser extension, or using a simple app, without needing to know how to open up a port in the firewall or anything about uPNP, etc. In otherwords, it would just work, regardless of the network environment (although I'm sure there will be exceptions).
+
+I'm basing all this information on this 1hr 10min video I watched today about it. It's actually a great video, you can see it here: https://yewtu.be/watch?v=8I2axE6j204
+
+So, as far as I understand it, webrtc works using these things called SDP's which are similar to ipaddress and ports. SDP's can be enhanced by contacting an outside public server and receiving back an ICE message. This allows a client to know it's outside ip and faciliate p2p connections even when both clients are behind firewalls, nats, etc. without any user configuration.
+
+There is also a drawback to webrtc in that, suppose client A uses it and gets its own SDP. It still needs to establish some sort of connection to client B without using webrtc in order for client B to get that information. And client B also has to send its SDP to client A for the connection to be complete.
+
+This means there must be whats called a "signaling" server which is a traditional server for both clients to connect to so it can relay the SDP's to each client. This would be a weakness in the captain dirgo network, because if you knock the signaling server out, then it would prevent anyone new from joining the network through webrtc.
+
+However, webtorrent would definitely have the same issue, so I think I can piggyback off of it in order to not need signaling servers of my own. In that case, to kill captain dirgo using this method would kill webtorrent as well, and would be much harder to accomplish.
+
