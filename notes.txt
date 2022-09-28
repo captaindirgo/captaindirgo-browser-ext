@@ -370,3 +370,24 @@ This means there must be whats called a "signaling" server which is a traditiona
 
 However, webtorrent would definitely have the same issue, so I think I can piggyback off of it in order to not need signaling servers of my own. In that case, to kill captain dirgo using this method would kill webtorrent as well, and would be much harder to accomplish.
 
+2022/9/28
+
+Today I spent the whole time examining webtorrent. I had a bad assumption going in, in which I thought webtorrent had its own version of dht to resolve magnet links, so I was very confused.
+
+I wrote a prototype client and did a few experiments with it, so I could see how it worked, and that it did work, so that when I finished analyzed it more deeply I wouldn't come up with nothing.
+
+I ran the following tests:
+
+Seeded a file from desktop on a vpn. Was able to receive file on android chrome outside of vpn. Also did this vice versa even though both were nat'ed.
+
+Seeded a file from desktop under the hotspot of the phone. Cannot receive file on phone. I think them being on the same network was the issue.
+
+So, anyway, after doing some line by line debugging, I decided to turn everything off, DHT, LSD, webseed, to see if webtorrent would still work, and it did.
+
+I had originally thought that webtorrent was using its own version of DHT, and that's how it was transmitting the SDP data so the peers could connect. However, since it was still able to transfer files regardless of it being off, I now believe that it is using a special kind of bittorrent tracker that is acting as a signaling server. This is because the magnet link has a bunch of bittorrent trackers encoded within it, so that would be the way the other peer figures out how to find out the SDP of the first peer.
+
+I know it's rather ridiculous to have to poke through the code like I'm trying to solve a who-done-it mystery, but there is hardly any documentation and webtorrent is pretty huge with tons of options and features. It was really hard to understand how the core worked when there is so many moving parts.
+
+So this leaves me thinking that I might to need to write my own networking code. Honestly, what I've seen so far of Webtorrent looks not so great. It's all plain js, no typescript, and if statements everywhere. I don't want to try and add code to have signaling internally in the network and make sure the peers act in a sane way, and then can also handle malicious peers among all of this stuff. Although it's a mature protocol, I doubt that anyone has really tried to attack webtorrent so I don't know how many flaws could be in there, and I really don't like the idea of trying to maintain it.
+
+Hyperswarm is a little better, but it's geared towards nodejs, the webrtc stuff is kind of tacked on and uses a signaling server. I'll take a look at it further and also see what other things I could do.
