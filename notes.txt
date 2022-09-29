@@ -391,3 +391,14 @@ I know it's rather ridiculous to have to poke through the code like I'm trying t
 So this leaves me thinking that I might to need to write my own networking code. Honestly, what I've seen so far of Webtorrent looks not so great. It's all plain js, no typescript, and if statements everywhere. I don't want to try and add code to have signaling internally in the network and make sure the peers act in a sane way, and then can also handle malicious peers among all of this stuff. Although it's a mature protocol, I doubt that anyone has really tried to attack webtorrent so I don't know how many flaws could be in there, and I really don't like the idea of trying to maintain it.
 
 Hyperswarm is a little better, but it's geared towards nodejs, the webrtc stuff is kind of tacked on and uses a signaling server. I'll take a look at it further and also see what other things I could do.
+
+2022/9/29
+
+Today I looked at idris and purescript as languages to use for the network backend stuff.
+
+I want to use an advanced language so that I can be relatively sure there aren't any major bugs, and hopefully be easier to maintain.
+
+Purescript is based on Haskell and has some of the features of idris. It looked alright and should work, but I liked idris better, even though its much newer and somewhat experimental. Since it's a dependently typed language, it will allow me to use proofs to verify that it doesn't contain certain types of bugs. Also, I've used idris extensively before, so it help me work faster. The downside is that not too many people know or use it, so I plan to only use it for the backend network code, and leave the front end typescript/svelte.
+
+I got idris compiling and working with javascript, and I should be able to start writing the basis for the network code tomorrow and see how it goes. I'm not ruling out using another library for networking instead, but if I don't find anything good, I will have to write my own.
+
