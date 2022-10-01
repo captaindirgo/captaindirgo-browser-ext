@@ -402,3 +402,25 @@ Purescript is based on Haskell and has some of the features of idris. It looked 
 
 I got idris compiling and working with javascript, and I should be able to start writing the basis for the network code tomorrow and see how it goes. I'm not ruling out using another library for networking instead, but if I don't find anything good, I will have to write my own.
 
+2022/10/1
+
+Sorry about yesterday, I didn't get a lot done and was quite busy other stuff.
+
+I verified that webtorrent does use the bittorrent-tracker as a signaling server. That means by itself it really wouldn't be very decentralized, and looking at its code I really don't want to use it as a basis.
+
+I also started fleshing out a plan for the UI. My main goal is to make it as simple as possible to use, and put more advanced features behind an options screen. There isn't much to do for it, just the design of the extension button, the comments page itself, and an options page. I'm thinking of putting a navbar on top for additional features, such as live chat for a particular url.
+
+I watched a video overview of the Elon Musk tweets as it relates to his purchase of twitter. It was interesting because twitter and this extension have a lot of common issues. Bots, spam, etc. Captain Dirgo has a advantage here, in that the way that I'm going to build it, it's not possible to know which urls are popular without going through them one by one (this is because only the hash is stored, not the original). This means that in order to spam a lot of urls and get a lot people to view it, you would have to go through the above process to find a popular url, which would be a kind of "natural" mining process if you will.
+
+Another thing they discussed was putting Twitter on a blockchain and decided that a p2p network wouldn't be able to handle the load. Captain Dirgo has an advantage here because comments on each url are completely separate, which means that sharding is easy. I'm thinking I could do something like DHT to solve that issue.
+
+I was thinking of the purchase of Twitter itself. Suppose the purchase really did go through and they threw away the original code completely, it seems they are just buying two things. One, the name twitter and the popularity of that platform, and then also the destroying of the old platform, so anyone who used to use it has to find an alternative, and Elon Musk's new twitter would be the obvious choice. So effectively he's buying the chance to get th old twitter audience. It's equivalant to a $44 billion advertising campaign.
+
+So why would Captain Dirgo, which has zero brand recognition and zero initial audience be a success? The one reason I can come up with is that it's always present and sort of rides the brand recognition of the sites people visit when using it. There is always that curiosity factor of whether someone made a Captain Dirgo comment on a particular url.
+
+My biggest problem that I forsee as of now is how to handle it if the extension is blocked by google/mozilla. Side-loading in Windows chrome is a big pain in the ass. Everytime you start the browser it will nag you about all side-loaded extensions. I have a few options here. One is to make the extension a script for tampermonkey. Even though manifest v3 is going to become mandatory in 2023, and that will block Tampermonkey in its current form, I believe Tampermonkey will find a way to keep working. In other words, it makes my problem the same as Tampermonkey's problem. So that if Tampermonkey finds a way to solve it, then I can piggyback on their solution. Also, manifest v3 will block adblockers, so I think there is going to be some shift in the way things are done, which may allow me to keep the extension available and not too difficult to install.
+
+Another option is to create a patch for chromium to prevent it from making manifest v3 mandatory. I will do that if I have to, but I suspect someone else will do it before me.
+
+Besides all that, I was looking into https://ceramic.network/ today, which has a seems to have a lot of great ideas, although I don't really understand how it works yet. I'm going to look at it again tomorrow and see what I can use from it, or if I can just plug it in, out of the box.
+
