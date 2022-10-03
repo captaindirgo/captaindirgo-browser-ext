@@ -432,31 +432,50 @@ I'm trying to design a good protocol. I'd rather not do a coin, because that wou
 
 Captain Dirgo has a lot of similarities with email, where each url can be thought of an email address. The only question then is who holds the emails and what is their incentive to us this system.
 
-This is my current idea. It would be a DHT based system, where each node is responsible for storing and providing comments attached to urls that have the closest hashes (using xor or something) to their node id. The amount of urls that they are responsible for is configurable by the user.
+This is my current idea. It would be a DHT based system, where urls are the keys, and comments and other information are the values. The amount of urls that a node is responsible for is configurable by the user.
 
 The incentive model for this network is based on a simplified version of KARMA that Arweave uses: https://arwiki.wiki/#/en/karma (See Basic Mechanism, paragraph 2), where Proof of Work provides the value. I decided that the full Karma protocol, with bank-nodes and currency and transactions was more complex than what I need.
 
 The system centers around CPU efficient hash puzzles with a timestamp attached as a proof that an entity is not acting maliciously or trying to overload the network (ie. Proof of work). I will refer to these solved hash puzzles as PoW.
 
-To begin with, each message may have one or more PoW attached to it. This gives the message value, and allows it to be showed with more promenance in the comments shown to users. When a user upvotes a comment, they perform an PoW that gets attached to message as well. In general the worth of these PoW's decrease over time in terms of scoring (below).
+To begin with, each message may have one or more PoW attached to it. This gives the message value, and allows it to be showed with more promenance in the comments shown to users. When a user upvotes a comment, they perform an PoW that gets attached to message as well. Also, in general the worth of these PoW's decrease over time in terms of scoring (below).
 
-Each node keeps a score attached to every other node that it knows about. Think of it like the tit-for-tat algorithm except for with points instead of just remembering what your peer did and doing the same thing again. Each score is determined by each node individually and different nodes can have different opinions on a particular third node (eg. where *a*,*b* and *c* are nodes in the network, *a* scores *c* with *x* points, and *b* scores *c* with *y* points, where x and y may not be equal).
+Each node keeps a score attached to every other node that it knows about. Think of it like the tit-for-tat algorithm except for with points instead of just remembering what your peer did and doing the same thing again. Each score is determined by each node individually and different nodes can have different opinions on a particular third node (eg. where *a*,*b* and *c* are nodes in the network, *a* scores *c* with *x* points, and *b* scores *c* with *y* points, where *x* and *y* may not be equal).
 
 Nodes can then ask peers to perform operations depending on the score and what the operation is to be performed.
 
-In general, the score is based on how the node is behaving in relation to the peer, and what basically amounts to a portfolio of good deeds that the node has performed recently. You can think of the idea as a coin, where if you add up all the good things that a node has done (PoW being one of them). Since reviewing all the data of an particular portfolio would use too much bandwidth and processing time, a node samples the good deads of a peer to determine its score, using a merkle tree with a digest including an index length.
+In general, the score is based on how the node is behaving in relation to the peer and what amounts to a portfolio of good deeds that the node has performed recently. You can think of the idea as a account balance, which is equal to the total of all the good things that a node can prove it has done (PoW being one of them) recently. Since reviewing all the data of an particular portfolio would use too much bandwidth and processing time, a peer samples the good deads of a node to determine its own opinion of the nodes score, using a merkle tree with a digest including an index length.
 
-To establish a positive score, a node can do a few things
+Specifically, to establish a positive score with a peer, a node can do a few things:
 
-1. Allow the peer to sample of messages that are associated to the node. This is done by providing the peer with a merkle tree hash top of the messages it contains and a count. The peer replies with an index, and the node must provide the message and the merkle path to that index (ie. establish proof that the message provided was in the merkle tree at the corresponding index). Any PoW attached to the message provided will contribute to the score.
+1. Allow the peer to sample messages that the node stores. This is done by having the node provide the peer with a merkle tree hash top of the messages it contains and a count. The peer replies with an index, and the node must provide the message and the merkle path to that index (in order to establish proof that the message provided was in the merkle tree at the corresponding index). The PoWs attached to the message provided will contribute to the peer's evaluation of the node's score.
 2. Perform operations for the peer that it requests.
 3. Be owned by a user account with a high score (see below for scoring users)
 
-To establish a positive score, a user can do a few things
-1. Provide a list a proof of messages (similiarly to item 1 for nodes, above) with PoW's attached or PoW's of upvotes.
+To establish a positive score, a user can provide a list a proof of messages (similiarly to item 1 for nodes, above) with PoW's attached or PoW's of upvotes.
 
-In addition, users or nodes can also establish a positive score by completing a random PoW puzzle with an initial nonce setup by a peer it wants to establish a relation with. The more difficult it is the higher the score (this may not be linear). This allows a new user or node to get started on the network.
+In addition, users or nodes can also establish a positive score by completing a random PoW puzzle with an initial nonce setup by the peer evaluating it. The more difficult it is the higher the score (this may not be linear). This allows a new user or node to get started on the network.
 
-I'm also thinking that maybe that a kind of trust web can work as an enhancement to the above. If the network becomes tight enough, so that nodes are all known by each other through x paths of separation, maybe an algorithm could be designed to take advantage of this to provide another way to score unknown nodes. (ex. Node A wants to establish a score of Node C and already has a score for Node B. Node B already has a score for Node C. Node A can aks for Node B's score to help it decide on a score for Node C.
+I'm also thinking that maybe that a kind of trust web can work as an enhancement to the above. If the network becomes tight enough, so that nodes are all known by each other through x paths of separation, maybe an algorithm could be designed to take advantage of this to provide another way to score unknown nodes. (ex. Node A wants to establish a score of Node C and already has a score for Node B and Node B already has a score for Node C. Node A can then ask Node B for its score of Node C to help with its evaluation.
 
-As far as providing balance for the score needed to perform tasks, I think I will just give some general limits, and allow a queue ranked by score for each node to decide which tasks to perform on behalf of peers.
+As far as figuring out the minimum score necessary to perform task, each node will have a queue of requests by peers and rank them by score.
+
+As far as tasks that peers can ask each other in addition to the above, they would be the following:
+
+1. Establish a connection
+1. DHT related tasks (find neighbors)
+2. Retrieve a list of encrypted messages for a url hash.
+3. Provide a message, or upvote to be stored. (I think I will also be able to provide downvotes)
+
+and probably others, I haven't really completely thought out the tasks just yet.
+
+2022/10/3
+
+I didn't get a too much done today, but I'm starting to experiment with websocket bittorrent trackers and I also looked at i2p. i2p is not designed to work within the browser and I don't see it being easy to connect to without proxies which kind of defeats the purpose.
+
+One thing that I didn't talk about yesterday is that for browser-based nodes to connect to each other directly you have to use webrtc, which has some limitations that must be worked around. For two browser-based nodes, to connect to each other, they must both create an SDP and somehow get the SDP transferred across to the other party. These SDP's can only be used for a single connection. So I wouldn't be able to, for example simply have a node publish its SDP somewhere, because I cannot allow multiple peers to try to connect to the same SDP (I'm actually not quite sure what would happen if two or more other peers did try to use a single node's SDP, but given there so many different types of browsers, it would be difficult in general to say).
+
+This seems to be solved already for me, if I just use existing websocket bittorrent trackers. There aren't that many of them, at least according to here: https://github.com/ngosang/trackerslist/blob/master/trackers_all_ws.txt , so I don't want to rely on this solely. So in addition, I'm thinking of making a Captain Dirgo daemon along with the extension that uses an incoming port. Having actual daemon's in the network would open up additional possiblities, such as publishing that daemon using regular bittorrent trackers and Mainline DHT, which would be much more robust.
+
+The only problem here is what is the incentive? I don't believe that many people would be interested in altrustically supporting the network, because what I've seen with most systems like that is that they languish, especially when they are not very well known (maybe Tor as an exception). So, running the daemon would enhance the score of a user associated with it. It would do so, by making anyone who connects to the app use PoW (as I described yesterday) to have it perform services.
+
