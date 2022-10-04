@@ -479,3 +479,18 @@ This seems to be solved already for me, if I just use existing websocket bittorr
 
 The only problem here is what is the incentive? I don't believe that many people would be interested in altrustically supporting the network, because what I've seen with most systems like that is that they languish, especially when they are not very well known (maybe Tor as an exception). So, running the daemon would enhance the score of a user associated with it. It would do so, by making anyone who connects to the app use PoW (as I described yesterday) to have it perform services.
 
+2022/10/5
+
+Today I did a lot of work experimenting with actually coding the extensions.
+
+I found for google chrome to use webrtc to make a p2p network would be pretty difficult. I don't even know if I can do it. There is another extension called Tor Snowflake, which allows browsers to act as an proxy to censored websites, which has about the same problem as mine: / https://twitter.com/torproject/status/1562921730472980481?s=20&t=mDtig24fNUsoXt4ZAJpWmw
+
+The big problem with what Google is doing is that in the next version of their extension api, they take away the ability to do almost anything in the background. The threads in v3 live in little sandboxes that can't do anything besides fetch() calls and listening for events. They have no access to the WebRTC API. You aren't even allowed to pass any executable code to them. I tried passing a lambda function to one, and it was simply stripped out.
+
+I also don't have any access to a long lived webpage in them. The best I could do is have the extension pop up a background tab that the user must leave open, and then maybe I could use webrtc through that. 
+
+Even if that doesn't work, I still think I can make Captain Dirgo work with chrome, though. I just have to change it up a bit. My idea is to make the standalone daemon I was talking about yesterday accept https requests. From a user interface perspective, then, it would basically be the same, anyone that wanted to connect to the daemon would have to provide PoW in order to use it. Whoever owned the daemon could then use that PoW to boost their user's standing. Then I'd use a dumbed down simpler extension that could only make https requests to a server to interface with it.
+
+Firefox is still going to support v2 for the forseeable future and won't have an issue, but Chrome, Chromium, Brave, etc. take over 65% of the marketshare. So what I think I will do is make the simple https version of the extension first with the standalone app, and then come out with a manifest v2 version for Firefox. The manifest v2 version will help strengthen the Captain Dirgo network, and if Google finally backs down and makes v3 less restrictive, then I can update the Chromium version then as well.
+
+This should be the fastest way I can get Captain Dirgo to market, anyway. Also, this simpler version of the extension will allow me to target other browsers as well, so that I shouldn't have much of a problem getting it to work on mobile, either.
