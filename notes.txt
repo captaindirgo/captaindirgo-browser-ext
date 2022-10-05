@@ -494,3 +494,59 @@ Even if that doesn't work, I still think I can make Captain Dirgo work with chro
 Firefox is still going to support v2 for the forseeable future and won't have an issue, but Chrome, Chromium, Brave, etc. take over 65% of the marketshare. So what I think I will do is make the simple https version of the extension first with the standalone app, and then come out with a manifest v2 version for Firefox. The manifest v2 version will help strengthen the Captain Dirgo network, and if Google finally backs down and makes v3 less restrictive, then I can update the Chromium version then as well.
 
 This should be the fastest way I can get Captain Dirgo to market, anyway. Also, this simpler version of the extension will allow me to target other browsers as well, so that I shouldn't have much of a problem getting it to work on mobile, either.
+
+2022/10/6
+
+Today I looked in polygon to see if it could help. I think the only way it would work is to make it some sort of paid network where you pay a small fee to write a comment. I don't think that is a good way to go.
+
+I also did a lot of thinking about the Captain Dirgo network itself, below. I apologize that it is so freeform and disorganized, but I really explored a lot of topics so it was hard to put these in a structured form:
+
+If I use tokens as a reward for being a server, how do I even know if the server is properly relaying requests? IOW, how can the contract on polygon matic know whether a user evaluated the server as deserving of coins.
+
+I had another idea that the blockchain contract could accept PoW, but PoW by itself doesn't prove anything. It would be pretty easy to write a program that did a lot of PoW but didn't do anything to support the Captain Dirgo network, so I think thats out.
+
+One other thought I had, how can we prevent a node from cheating by providing its portfolio of proofs merkle tree with duplicate PoW entries? I believe we can do this by just requiring that the entries are sorted. If the entity requiring a proof samples enough merkle paths, it would easily be able to tell if a significant number of entries were duplicated.
+
+I went over the design again and found a flaw. Just because an entity has a lot of proof of work that it did, and a lot of userids associated with it, doesn't mean it didn't just generate the PoW and fake the user ids. Doing so would give it a license to spam if the honest nodes were programmed to just accept it.
+
+So each node needs to keep a network of legitimate peers and users. The only way that PoW can be accepted then is if the sample contains entites that it knows about (ex. has seen the user id/server id in message logs, etc.)
+
+Let's think about PoW. Say a spammer wants to send a million messages. If we force everyone to use 10s of cpu work per message, thats 115 days of work for the spammer, if the machine has roughly the same power. Not too bad to reduce spam, I think.
+
+Lets try and simplify to the most basic logic that I can do while still making it a resilient network:
+
+1. Every action, voting up or down / messages / retrieving data from a server require a PoW. The PoW has to be unique to that action, so for example, an upvote PoW would be seeded from the text of the message, user making it, and timestamp, a message would be seed from the text, user writing it, and the timestamp. Any action that has an identical PoW result is discarded.
+2. When displaying messages received from a server node, the PoW is verified. When a message is stored, the server node verifies it.
+3. Servers node are in a DHT network
+4. Messages are stored as merkle trees within the server nodes. When two server nodes talk to each other, if one doesn't have a merkle tree root or an ancestor of it for a url, it is blocked as being a suspected cheater for a period of time.
+5. Messages are also stored as merkle trees by browser nodes, that do the same cheater logic as in 4. (In fact server nodes and browser nodes are almost the same, but browser nodes can display messages for a url.)
+6. State can be stored in the merkle nodes. Receiver can ask to sample a select set of paths to verify state is mostly correct.
+7. When a browser node talks to various servers, and comes across user ids it stores as having met them. Eventually it will get around to see most of the servers, and user ids and be able to give the user a flair if they own a server, as well as promote messages appropriately.
+
+I'm also wondering about whether I need to use a cpu-friendly algorithm for Proof of Work or just a generic one. If PoW always requires a seed from the other party, it seems that running a gpu program as a one off would be pretty slow. Although a dedicated spammer could queue up a bunch of requests and then run then all at once.
+
+Anyway, there is a cpu friendly algorithm called yespower which might be a good thing to try out.
+
+I also found this which is a prebuilt Proof of Work for the browser:
+
+https://pixelspark.github.io/webpow/pow.html
+
+And this which is a nice gui for the thing:
+
+https://git.sequentialread.com/forest/pow-captcha
+
+I also thought of way to use webrtc with the new chrome extension api (which is extremely limiting). It revolves around the idea that just having an SDP of a peer that is delegated to a particular node is the same as having an active one-way connection. The SDP can be saved in local storage as a string and when needed, a webrtc can be created using it. During the active connection, another SDP pair can be exchanged so that either peer can recreate a connection the next time they want to talk to each other.
+
+The way this would work in the extension, is that it would insert an iframe into every page the user visited, which would be manifest itself as a side bar, that could be opened and closed. When opened, it would activate the webrtc connection through the document itself.
+
+I was also thinking that the server node and the browser node are nearly the same thing. The only difference is that the browser node only stores certain message logs (the ones the user visited and clicked the captain dirgo sidebar on), while the server node stores message logs from its designated hashed urls according to where it is in the DHT network.
+
+So, they both should use the same core architecture. I want to do this in Idris so I can use its typing system to eliminate a lot of possible bugs.
+
+I know that it'll need:
+
+MyUser - user info
+User - user info
+KnownUserIds - set of known users along with their activity
+Connection - one of TCP, UDP, WebSocket, or WebRTC
+ActiveConnections - The connections that are active currently
