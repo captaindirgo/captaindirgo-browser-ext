@@ -1,3 +1,5 @@
+const webpack = require('webpack'); //this is necessary to automatically get 'process' defined in browser, see https://stackoverflow.com/a/66731232/359606
+
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
@@ -36,11 +38,14 @@ module.exports = {
           fullySpecified: false
         }
       }
-    ],
+    ]
   },
   resolve: {
     alias: {
       svelte: path.dirname(require.resolve('svelte/package.json'))
+    },
+    fallback: {
+      buffer: require.resolve('buffer/'), //This will make Buffer available from within the browser (which is a node.js library), final '/' required as noted here: https://github.com/feross/buffer/README.md
     },
     extensions: ['.mjs', '.js', '.ts', '.svelte'],
     mainFields: ['svelte', 'browser', 'module', 'main']
@@ -56,5 +61,11 @@ module.exports = {
         { from: `${browser}_manifest.json`, to: `../${BUILD_DIR_NAME}/manifest.json`, context: 'public' },
       ],
     }),
+    // fix "process is not defined" error:
+    // (do "npm install process" before running the build)
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+      Buffer: ['buffer', 'Buffer'],
+    })
   ],
 };
