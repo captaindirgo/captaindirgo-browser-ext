@@ -479,7 +479,7 @@ This seems to be solved already for me, if I just use existing websocket bittorr
 
 The only problem here is what is the incentive? I don't believe that many people would be interested in altrustically supporting the network, because what I've seen with most systems like that is that they languish, especially when they are not very well known (maybe Tor as an exception). So, running the daemon would enhance the score of a user associated with it. It would do so, by making anyone who connects to the app use PoW (as I described yesterday) to have it perform services.
 
-2022/10/5
+2022/10/4
 
 Today I did a lot of work experimenting with actually coding the extensions.
 
@@ -495,7 +495,7 @@ Firefox is still going to support v2 for the forseeable future and won't have an
 
 This should be the fastest way I can get Captain Dirgo to market, anyway. Also, this simpler version of the extension will allow me to target other browsers as well, so that I shouldn't have much of a problem getting it to work on mobile, either.
 
-2022/10/6
+2022/10/5
 
 Today I looked in polygon to see if it could help. I think the only way it would work is to make it some sort of paid network where you pay a small fee to write a comment. I don't think that is a good way to go.
 
