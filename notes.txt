@@ -550,3 +550,21 @@ User - user info
 KnownUserIds - set of known users along with their activity
 Connection - one of TCP, UDP, WebSocket, or WebRTC
 ActiveConnections - The connections that are active currently
+
+2022/10/6
+
+Chrome has some more limitations I found out today, in that it has only 2 types of storage that an extension can use, local storage which is saved to disk and rather slow, and session storage, in which there is only a 1MB limit.
+
+Also, whenever the user goes to a different url, everything that was in memory gets shutdown. Any connections to other peers would also be shutdown. So it means that any chrome browser's connection to the network will be very spotty, and we have to store and load back all state in the local and session storage when the url changes which is pretty bad.
+
+I think that I'm going to work on firefox and the daemon first, and then go back to chrome after that. Hopefully either google will loosen their grip, or someone will find a way around these restrictions, or I'll think of another idea for using them.
+
+So regardless of the context, browser or daemon, the core code functionality will be about the same:
+
+1. Every 5 minutes or so, we need to announce on bittorrent that our node exists. For browser, it will use a websocket bittorent tracker. (We're piggybacking on the bittorrent network here, so captain dirgo can't be targeted this way easily.)
+2. We then join up with a double DHT network, one for users and one for urls. 
+3. Then we use a state machine to manage all the events and actions.
+4. We also have a db cache to store data.
+
+The db for the browser extension might be somewhat difficult. Besides session store, there is IndexedDB, but I heard that its possible to get corrupted when used with an extension. So, I'll have to do some experiments to see which if any will work.
+
