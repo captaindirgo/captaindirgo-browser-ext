@@ -17,6 +17,12 @@
         "js": ["on_open_page.js"]
      }
     ],
+  "web_accessible_resources": [
+      {
+        "resources": ["sidebar.html"],
+        "matches": ["<all_urls>"]
+      }
+    ],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
