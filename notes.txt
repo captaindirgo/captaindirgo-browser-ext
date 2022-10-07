@@ -568,3 +568,25 @@ So regardless of the context, browser or daemon, the core code functionality wil
 
 The db for the browser extension might be somewhat difficult. Besides session store, there is IndexedDB, but I heard that its possible to get corrupted when used with an extension. So, I'll have to do some experiments to see which if any will work.
 
+2022/10/7
+
+Today was a short day, just felt tired, and I also had some tax crap to worry about.
+
+I spent a lot of time trying to understand how best to implement a state machine that works between Idris and javascript. Since javascript uses events there needs be a global object that represents the state.
+
+In the example that I looked at, here: https://medium.com/the-web-tub/idris-state-machines-in-javascript-apps-b969e2cb6ed2 , the author is reading the state from js into idris, processing it in idris and then writing it back to js for every event.
+
+I don't think that idea is a good one, since not only is it quite slow, but it also means that for a complicated state object, you'd need to have a lot of machinery for reading and writing, and then anytime that state object is updated, you'd have to update the machinery along with it. There are libraries for creating generics (which would allow the compiler to generate code to automatic read and write to js) but I didn't want to make the building of the node so complex to depend on additional libraries if I don't have to.
+
+Besides which, it seems to me that simply just storing the ptr to idris data into a global var in js would suffice, and I don't see why explicit read/write calls are any safer or give any advantage to this at all. I'm not entirely positive this is possible but it's hard to image it would not be.
+
+Other than that, the concept the author was using is quite good. Basically you have a state datatype and a "command" datatype. In the "command" datatype, you have within the type the value of the prior state and a function that returns the next state given an argument. Then you define instances for only valid translations of state. If you're not familar with dependent types sorry if that is a little hard to understand.
+
+So, for example, say you got an event back from opening a port. You would have to have an instance in the "command" datatype where the prior state is what it should look like just before opening the port. Then the function that returns the next state would take the javascript event response and if the response was the port opening was successful, the next state would have be one that indicated the port was opened. If the response was that opening the port was unsuccessful, the resulting state would have indicate that the port opening failed. All of this would be done at compile time.
+
+What this allows you to do is avoid any bugs where you forget to check the state is in a proper state before altering it or put it into an incorrect state after the event is finished. In the above example, the compiler would produce an error, if you forgot to check in the port was opened already, or if a port was never requested to be opened.
+
+This functionality is why I really think a dependently typed language like Idris is the way to go for this project. With all the different types of connections, messages and also the different entities that will use this state engine (chrome/firefox/daemon), it creates a huge explosion of different state conditions.
+
+Without having the compiler help make sure that the states are correct, it would be very difficult to avoid having a lot of bugs.
+
