@@ -21,17 +21,29 @@ console.log('popup.js: rtc peer connection is ' + RTCPeerConnection);
 //var value = { v : 5};
 var value = { v : 6, f : () => { console.log('hi there, im a lambda')}};
 
-chrome.storage.local.set({key: value}, function() {
-  console.log('Value is set to ' + value);
-  console.log('Value.v is set to ' + value.v);
+var MAX_SIZE = 10000;
+var a = []
+
+for (let i = 0; i < MAX_SIZE; i++) {
+  a.push(i);
+  
+}
+
+var st = performance.now()
+
+chrome.storage.session.set({key: a}, function() {
+  var sett = performance.now()
+  console.log('set is done, settime: ' + (sett - st));
+  console.log('set is done, a.length: ' + a.length);
+  st = performance.now()
+  chrome.storage.session.get(['key'], function(result) {
+    var gett = performance.now()
+    console.log('get is done, gettime: ' + (gett-st));
+    console.log('get is done: ' + result.key.length);
+
+  });
 });
 
-chrome.storage.local.get(['key'], function(result) {
-  console.log('Value currently is ' + result.key);
-  console.log('Value.v currently is ' + result.key.v);
-  console.log('Value.f currently is ' + result.key.f);
-  result.key.f()
-});
 //END HACK TEST
 
 

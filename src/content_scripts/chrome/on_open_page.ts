@@ -17,4 +17,8 @@ function addIframe() {
 // iDiv.innerHTML = 'hi there'
 // document.body.appendChild(iDiv)
 
+//HACK TEST
+console.log('popup.js: rtc peer connection is ' + RTCPeerConnection);
+
+
 addIframe()

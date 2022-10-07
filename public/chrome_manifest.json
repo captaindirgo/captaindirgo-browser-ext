@@ -4,7 +4,8 @@
   "description": "Extension to allow you to comment on any web page",
   "permissions": [
     "declarativeContent",
-    "storage" 
+    "storage",
+    "unlimitedStorage"
   ],
   "manifest_version": 3,
   "background": {

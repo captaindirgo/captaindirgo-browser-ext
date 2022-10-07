@@ -13,6 +13,7 @@ module.exports = {
     popup: path.join(__dirname, `../${SRC_DIR_NAME}/popup.ts`),
     background: path.join(__dirname, `../${SRC_DIR_NAME}/background/${browser}/background.ts`),
     on_open_page: path.join(__dirname, `../${SRC_DIR_NAME}/content_scripts/${browser}/on_open_page.ts`),
+    sidebar: path.join(__dirname, `../${SRC_DIR_NAME}/sidebar.ts`),
   },
   output: {
     path: path.join(__dirname, `../${BUILD_DIR_NAME}`),
