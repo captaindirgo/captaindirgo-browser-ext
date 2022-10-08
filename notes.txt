@@ -590,3 +590,17 @@ This functionality is why I really think a dependently typed language like Idris
 
 Without having the compiler help make sure that the states are correct, it would be very difficult to avoid having a lot of bugs.
 
+2022/10/8
+
+* Verified that I can pass objects from Idris to Javascript and back again. Idris objects are actually just javascript objects so it's quite easy.
+* Started a new project for the Captain Dirgo daemon. It will also be where all the common code is stored for handling the network.
+
+I decided to work on the daemon first, since the network code is the biggest unknown right now. It's also shared between the browser and the daemon, and by doing the daemon first makes it easier to test.
+
+* Got typescript working with nodejs. Also got the vscode debugger to run with typescript.
+* Started working with create-bittorrent, and parse-bittorrent libraries. I was able to create a torrent object, but the magnet id is always the same regardless of the contents.
+
+I'm thinking of allowing captain dirgo to work off just a magnet uri. This way it can be more claudestine. The bittorrent tracker wouldn't be able to tell without connecting, that the network is actually a Captain Dirgo one. Not sure if it would be useful, but maybe in some locked down jurisidictions, such as in Western Europe that would ban it, would have a harder time finding it. Of course everyone would have to know the specific magnet uri to connect.
+
+* Started working with commander which is an node command line parser. It's pretty slick, I must say.
+
