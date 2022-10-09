@@ -594,13 +594,26 @@ Without having the compiler help make sure that the states are correct, it would
 
 * Verified that I can pass objects from Idris to Javascript and back again. Idris objects are actually just javascript objects so it's quite easy.
 * Started a new project for the Captain Dirgo daemon. It will also be where all the common code is stored for handling the network.
+* Got typescript working with nodejs. Also got the vscode debugger to run with typescript.
+* Started working with create-bittorrent, and parse-bittorrent libraries. I was able to create a torrent object, but the magnet id is always the same regardless of the contents.
+* Started working with commander which is an node command line parser. It's pretty slick, I must say.
 
 I decided to work on the daemon first, since the network code is the biggest unknown right now. It's also shared between the browser and the daemon, and by doing the daemon first makes it easier to test.
 
-* Got typescript working with nodejs. Also got the vscode debugger to run with typescript.
-* Started working with create-bittorrent, and parse-bittorrent libraries. I was able to create a torrent object, but the magnet id is always the same regardless of the contents.
-
 I'm thinking of allowing captain dirgo to work off just a magnet uri. This way it can be more claudestine. The bittorrent tracker wouldn't be able to tell without connecting, that the network is actually a Captain Dirgo one. Not sure if it would be useful, but maybe in some locked down jurisidictions, such as in Western Europe that would ban it, would have a harder time finding it. Of course everyone would have to know the specific magnet uri to connect.
 
-* Started working with commander which is an node command line parser. It's pretty slick, I must say.
+2022/10/9
+
+Today was a short day. I read through this on Kademlia DHT: https://codethechange.stanford.edu/guides/guide_kademlia.html
+
+I skimmed through the S/Kademlia academic paper, which is a more secure version of Kademlia:  https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.68.4986&rep=rep1&type=pdf
+
+I also examined Mainline DHT (used by bittorrent magnet links). Mainline which is based on Kademlia and not S/Kademlia. I'm not sure why it hasn't been DOS'ed, maybe because if it was, anyone using it can go back to sharing regular torrent files until the attackers get bored and quit.
+
+This paper here (warning pdf) https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.68.4986&rep=rep1&type=pdf from 2012, shows that there seems to have been some real world attacks to shape the network and spy on users on Mainline DHT using sybil attacks.
+
+The first real world attacker seems to be from an ISP who wanted to direct clients to share data with each other within the ISP rather than share with peers outside of it (presumeably to cut costs). The second attacker seemed to be trying to gather info what torrents people are looking for on Mainline. It not only produces a lot of sybils to look for the "infohash" (which is a hash of the torrent file), but also then attempts to join the corresponding bittorrent network and download the torrent metadata to see what the torrent actually is. It's a good read if you are interested in that sort of thing. See page 5, starting at "A. Honeypots" for their real-world data collection. 
+
+I think that using S/Kademlia would largely fix the above attack.
+
 
