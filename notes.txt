@@ -616,4 +616,23 @@ The first real world attacker seems to be from an ISP who wanted to direct clien
 
 I think that using S/Kademlia would largely fix the above attack.
 
+2022/10/11
+
+Yesterday I did a lot reading Kademlia and DHT in general. I didn't really have any insights so I didn't write anything yesterday.
+
+Today I did some more reading on decentralized networks here: https://docs.google.com/presentation/d/11qGZlPWu6vEAhA7p3qsQaQtWH7KofEC9dMeBFZ1gYeA/edit#slide=id.g1718cc2bc_08645
+
+I only skimmed through the last part. It was a nice presentation but it didn't cover anything on adversial nodes, so it doesn't apply 100% to Captain Dirgo. It did talk about gossip protocol which seemed interesting but I didn't delve much into it.
+
+I also went through and analyzed the code of the most popular javascript implement on Mainline DHT (the one that bittorrent uses), so I could get a further handle on what is involved in a DHT network. (notes below)
+
+My plan now is to either modify the DHT system itself or rewrite it to make it work with browser nodes using WebRTC and CPU PoW WebWorkers to handle the karma part (where each user gets a vanity score for all their upvotes on their comments, and well as flair, etc.) I'll think more about this tomorrow.
+
+I was also considering a coin. I do worry that anytime real money is involved, the incentives get skewed. My main concern is that rather than use PoW to support the network, and fight spam, people would just use PoW to generate coins for themselves. Since custom programs created to on dedicated hardware would produce much more hashpower than anything I could write in javascript or wasm, it would mean that 99.99% of coins would go to these people and anyone trying to save comments attached to urls would basically get nothing in comparison for their work.
+
+In other words, the worthlessness of just vanity karma that can't be traded keeps the network more stable then if it was actually worth something.
+
+That said, I would like a global state or something to point all that PoW work at. Right now I don't have anything to point the work towards (it doesn't need to be pointed at anything, but might as well not waste it). I think maybe I could use it to have a canonical state for all url mesages, and a user state in general. So maybe that will work.
+
+
 
