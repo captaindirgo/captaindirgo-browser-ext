@@ -634,5 +634,121 @@ In other words, the worthlessness of just vanity karma that can't be traded keep
 
 That said, I would like a global state or something to point all that PoW work at. Right now I don't have anything to point the work towards (it doesn't need to be pointed at anything, but might as well not waste it). I think maybe I could use it to have a canonical state for all url mesages, and a user state in general. So maybe that will work.
 
+--
+
+bittorrent-dht:
+
+//start it up and listen
+const dht = new DHT()
+
+dht.listen(20000, function () {
+  console.log('now listening')
+})
+
+//this will state that it found a peer serving the particular infoHash (this can be thought
+// of part of the value of the key)
+dht.on('peer', function (peer, infoHash, from) {
+  console.log('found potential peer ' + peer.host + ':' + peer.port + ' through ' + from.address + ':' + from.port)
+})
+
+// find peers for the given torrent info hash. peers get sent as 'peer' events, listened to as above
+dht.lookup(parsed.infoHash, <callback when terminated>)
+
+If we take a closer look:
+  lookup
+    This calls _closest
+      _closest
+        creates a new table (k-bucket) for the infohash
+	calls k-rpc.closest
+	whenever it gets a reply it stores it in the table as a cache (note this is not in
+	k-rpc so it doesn't mess with k-rpc tables)
+        the peers themselves are the values (since this is bittorrent, after all)
+	??? do we follow bittorrent here, or do we directly return a result?
+      
+  announce(infoHash, [port], [callback])
+    If there isn't a table for the torrent already, calls lookup, and callsback announce
+    after lookup is done.
+    Then calls k-rpc.queryAll() with the q field set to 'announce_peer' and the a field with the port (i guess the address is taken from the message)
+    The values of the queryAll are from the k-bucket table according to the infohash.
+
+  put(opts, callback) // writes arbritrary payload
+    Has a bunch of logic for multiple key signed data
+    But otherwise just runs queryAll with the message 'put'
+
+  get // reads arbritrary payload
+    calls _closest
+      calls k-rpc.closest
+
+  receiving (in bittorrent-dht)
+  onquery: //receives a message from a peer
+    possible messages:
+      ping: just reply with our id
+      find_node: calls k-rpc.nodes.closest(). k-rpc.nodes is k-bucket table, so it pull out all of the closest nodes from its cache
+      get_peers: if it has a list of peers for the infohash, will return it, otherwise calls nodes.closest for the infohash to get the closest nodes it knows 
+      announce_peer: validates token against calculated host token. then adds the peer (no matter how close it is to the infohash)
+      get: if it's got the value cached, it gives the value, otherwise it calls nodes.closest() agai, like above
+      put: puts the token, does special stuff if mutable (that I don't want to look at now) then responds.
+  onnode: //called whenever a node is added by internal code, re-emits it to client
+      
+  k-rpc closest
+    calls k-rpc._closest
+      Makes an empty k-bucket table
+      calls its subfunction kick() with an empty k-bucket table
+        kick will use "nodes" which is the user's own node's k-bucket table
+        if not there, it'll use bootstrap to query nodes 
+	kick will then query all the nodes in the k-bucket using the k-rpc-socket.query
+	that it can and query any it didn't query before (using the 'queried' boolean array to keep track)
+	with a callback of the function, afterQuery
+      afterQuery gets the response back, if it's bad it calls kick() again
+      if its good, it'll add the peer it tried to connect to to its table
+      and call the "visit" callback argument if it was passed in
+      then call kick again too
+
+2022/10/12
+
+I was thinking about DHT and I'm not quite sure if it's the best network. The main problem is that it is focused on short simple messages to many different peers, which works well for UDP. However, since I want to be able to have browsers be full nodes on the network, I am relegated to using WebRTC, which is a much slower protocol when establishing connections.
+
+I'm not sure what the implications of that are, and whether it will be a problem or not. I think I need to do some experimentation on that.
+
+The other idea is to use freenet's algorithm, which has long standing connections and would be a better fit for WebRTC. I only skimmed freenet's whitepaper, so I need to delve into it more deeply so that I can better make a decision.
+
+Other than that, I came up with an initial roadmap for Captain Dirgo, which is subject to change which is still based on DHT.
+
+The idea is that version 1 would make it necessary to run a daemon along side the browser. Version 2 would allow firefox to not need a daemon anymore, and version 3 should work with chrome and other browsers. 
+
+Below is the breakdown of the roadmap on a rough architectural level:
+
+Version 1:
+
+* node ids are ip and a public key (like bittorent BEP42 and s/kademlia)
+* public key is used as a user id
+* we only have a DHT network, nothing underneath
+* DHT contains:
+  - nodeid - address/port (in the future, webrtc, etc.)
+  - userdata - a separate key from userid, contains data associated to user, good and bad. Split into 3 separate locations to prevent fuckery. (using hash of nodeid+1, nodeid+2, nodeid+3). T
+  - username - the userid associated with a username ... do we really want this?
+  - urlstart - keyed of the hashed url, contains block, or a merkle tree root of contained blocks
+  - url+block - a merkle tree node of a url (referenced by a higher up url+block or urlstart)
+* To write a message, upvote, etc. a put_value is run
+* To use must run a daemon app that browser locally connects to
+* nodes keep a log of estimated network size (for determining if other nodes are considered trustworthy given their distance to the infohash)
+* upvotes give proof of work
+
+Version 2:
+
+* webrtc integration
+  - we need websocket support in the daemons
+  - we have special messages for SDP, add, claim (and responses confirming or denying the claim)
+* firefox support w/o daemon
+* chrome still needs daemon
+
+Version 2.1
+
+* chrome support w/o daemon (hopefully)
+
+Version 3:
+
+* Global state, blockchain.
+
 
 
