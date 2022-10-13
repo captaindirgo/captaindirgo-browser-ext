@@ -750,5 +750,10 @@ Version 3:
 
 * Global state, blockchain.
 
+2022/10/13
 
+I was really busy today with other things so I wasn't able to work much.
 
+I finished reading about the freenet architecture. It shares a lot of similarity with Kademlia DHT in that both use xor to determine an abstract "distance" between nodes and keys and store keys in nodes that have a smaller "distance".
+
+Both seem fine, to be honest. I think Kademlia DHT has a slight advantage in that there probably will be less hops on average than freenet, so I think I'll stick with it.
