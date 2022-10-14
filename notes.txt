@@ -757,3 +757,26 @@ I was really busy today with other things so I wasn't able to work much.
 I finished reading about the freenet architecture. It shares a lot of similarity with Kademlia DHT in that both use xor to determine an abstract "distance" between nodes and keys and store keys in nodes that have a smaller "distance".
 
 Both seem fine, to be honest. I think Kademlia DHT has a slight advantage in that there probably will be less hops on average than freenet, so I think I'll stick with it.
+
+2022/10/14
+
+Another short day, but I did a little work designing the nodeid's. I'm going to use a combination of ip and pubkey. The mainline DHT network has a nodeid length of 20 bytes, but there is no reason that I can't make it longer if necessary.
+
+I was thinking of how the network could be attacked, what would an attacker most likely want to do. Here are my thoughts on this:
+
+1. DoS a user metadata the attacker doesn't like. The attacker could do this by knocking out the nodeids that are handling the user's metadata including his karma, etc. The only real effect here is that no one could read the user's karma for awhile.
+2. Spam a url the attacker wants to censor the comments on. They could do this by spamming a bunch of crap comments to a url.
+3. DoS a url to try to block people from seeing any comments there.
+
+For 1 and 3 I have an idea where the network will use a counter to automatically switch the nodes that are handling a particular user's metadata. So instead of using hash(url) to choose a set of nodes to save the comments for a url, hash(url+n) would be used, where n=0,1,2,3... When a client tries to lookup (url+0) and can't get a response, it would automatically then try (url+1). Then it becomes a game of whack-a-mole. No matter how many nodes an attacker tries to DoS, a normal user would simply increment the 'n' value until he gets a response. During the DoS, some comments or userdata could go missing, but after the attacker gives up, they'd all come back.
+
+For 2, each user has a PoW portfolio, as I was talking about before. So if an attacker used an established user with a strong PoW portfolio to spam, he would accumulate downvotes and blocks, eliminating his ability to spam more. If the attacker used a freshly minted user, the spam comments made using it would be pushed to the bottom anyway, since that user has no karma.
+
+They could also attempt some network attacks, but I think that S/Kademlia should handle these pretty well.
+
+
+
+
+
+
+
