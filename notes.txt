@@ -765,18 +765,23 @@ Another short day, but I did a little work designing the nodeid's. I'm going to 
 I was thinking of how the network could be attacked, what would an attacker most likely want to do. Here are my thoughts on this:
 
 1. DoS a user metadata the attacker doesn't like. The attacker could do this by knocking out the nodeids that are handling the user's metadata including his karma, etc. The only real effect here is that no one could read the user's karma for awhile.
-2. Spam a url the attacker wants to censor the comments on. They could do this by spamming a bunch of crap comments to a url.
+2. Spam a url the attacker wants to censor the comments on. They could do this by spamming a bunch of crap comments to it.
 3. DoS a url to try to block people from seeing any comments there.
 
-For 1 and 3 I have an idea where the network will use a counter to automatically switch the nodes that are handling a particular user's metadata. So instead of using hash(url) to choose a set of nodes to save the comments for a url, hash(url+n) would be used, where n=0,1,2,3... When a client tries to lookup (url+0) and can't get a response, it would automatically then try (url+1). Then it becomes a game of whack-a-mole. No matter how many nodes an attacker tries to DoS, a normal user would simply increment the 'n' value until he gets a response. During the DoS, some comments or userdata could go missing, but after the attacker gives up, they'd all come back.
+For 1 and 3 I have an idea where the network will use a counter to automatically switch the nodes that are handling a particular user's metadata. So instead of using hash(url) to choose a set of nodes to save the comments for a url, hash(url+n) would be used, where n=0,1,2,3... When a normal user tries to lookup (url+0) and can't get a response, it would automatically then try (url+1). Then it becomes a game of whack-a-mole. No matter how many nodes an attacker tries to DoS, a normal user would simply increment the 'n' value until he gets a response. During the DoS, some comments or userdata could go missing, but new comments/data could be added. and after the attacker gives up, all the old ones would come back.
 
-For 2, each user has a PoW portfolio, as I was talking about before. So if an attacker used an established user with a strong PoW portfolio to spam, he would accumulate downvotes and blocks, eliminating his ability to spam more. If the attacker used a freshly minted user, the spam comments made using it would be pushed to the bottom anyway, since that user has no karma.
+For 2, each user has a PoW portfolio, as I was talking about before. So if an attacker used an established user with a strong PoW portfolio to spam, he would accumulate downvotes, etc., hurting their portfolio and eliminating his ability to spam more. If the attacker used a bunch of  freshly minted users, the spam comments made using them would be pushed to the bottom anyway, since those users has no karma.
 
-They could also attempt some network attacks, but I think that S/Kademlia should handle these pretty well.
+An attacker could also attempt some whole network attacks, but I think that S/Kademlia should handle these pretty well.
 
+2022/10/15
 
+I read the kademlia white paper carefully today. I've previously read articles and blog posts and looked at a dht implementation in javascript previously, but I wanted to get a better idea of what its trying to accomplish and why it looks that way.
 
+I did a little bit of coding on the daemon. Although this is the first thing I'm working on, by no means do I expect most users to use it. The network will need these daemons, though, in order to faciliate communication between nodes.
 
+I also looked at hyperswarm dht. I might end up using it as a layer, but I need to understand it better.
 
+I'm sorry that it's going so slowly, I am very new to all of this, and having to write this soup to write the whole thing from the networking code to the UI in a language that I also don't know very well makes this more than difficult. But as time progresses it will go faster.
 
-
+My goal is to get something out there as soon as possible, but make sure that it's stable and works well. The first impression of is really important.
