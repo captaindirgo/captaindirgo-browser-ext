@@ -785,3 +785,49 @@ I also looked at hyperswarm dht. I might end up using it as a layer, but I need 
 I'm sorry that it's going so slowly, I am very new to all of this, and having to write this soup to write the whole thing from the networking code to the UI in a language that I also don't know very well makes this more than difficult. But as time progresses it will go faster.
 
 My goal is to get something out there as soon as possible, but make sure that it's stable and works well. The first impression of is really important.
+
+2022/10/17
+
+I was exhausted yesterday so I didn't write anything, but I went through the hyperswarm-web more thouroughly. It was really confusing, being written across 4 libraries and after I got to the bottom of it I realized it didn't do what it described. It uses a centralized server for sending topic data rather than any kind of useful peer-to-peer network. This is different than the regular hyperswarm and it means its rather useless for me.
+
+Today I looked through some more webrtc based projects. Here are my notes:
+
+ * https://github.com/daviddias/webrtc-explorer
+
+    incomplete, uses centeralized signaling server for now.
+
+ * https://github.com/tsujio/webrtc-chord
+
+    uses centralized signaling server.
+
+ * https://github.com/ScholarNinja/extension
+
+    uses webrtc-chord above, a chrome extension, might be nice to reference
+
+ * https://github.com/dominictarr/scuttlebutt
+
+    another complicated system that doesn't explain the protocol so I have no idea whether it is
+    what I need or not. Looks well tested, though.
+
+ * https://bit.ly/2P7w6cq (Nat_McAleese_Browser_Hosted_P2P_Resource_Discovery.pdf) https://news.ycombinator.com/item?id=19652516
+
+    Also uses a centralized signaling server. Otherwise, what he was building fits quite nicely with what I'm doing.
+
+I know that webrtc networks are possible without a centralized signaling server because webtorrent doesn't use one, and is probably the most actively used one of the bunch. The issue with it is that there is no webrtc dht connection, so all the peers connect through a tracker, and then they all basically connect to each other to share a particular torrent. This won't scale to the level that captain dirgo needs.
+
+I decided to look closer at freenet. Freenet has had a major shift since version 0.7 where it went from just random peers connecting to the idea that people needed to only connect to their friends, and those friends would connect to others and so on. The point is to hide that you are even using freenet. The problem I have is that the cross-section of most people's friends and those that would try out a new social network system is in most cases probably pretty small or non-existant, so I think that whole idea wouldn't really work well.
+
+However, freenet does have a mode where you can connect to random nodes, so I may investigate it further. In addition, the old freenet wasn't built around the "connection to friends" idea, and that may work. The downside is that I'd have to write it myself, because there is no javascript implementation of any freenet version.
+
+From that last item up above, https://bit.ly/2P7w6cq, I learned that chord dht requires a lot less connections than kademlia and there is even further improvement in that regard with s-chord. I'm not familar with chord so I will probably take a look at it tomorrow.
+
+I might also see if I can improve https://github.com/tsujio/webrtc-chord to not need a fucking signaling server. Jesus fucking christ, I've had to mention that so many times in this blog post. I don't know why no one can design a system without one besides the webtorrent guy.
+
+I also don't know if I really like kademlia DHT for this. Besides the fact that it is designed for DHT and requires loads of connections to other nodes being constantly formed and broken (that would be extremely slow for webrtc), it also doesn't allow nodes to have a lot of overlap. Nodes in a k-bucket (basically a binary prefix) only hold the data under that binary prefix and no more. Since most urls won't hold many comments, the data requirements would be extremely small, so idealy they should hold many of them, even outside their prefix. 
+
+I'm starting to think that I should use just a regular https website server and try and convince other people like the owners of poal.co to come on board. I have no idea how I can make this easy for them, since there is no standardized way to integrate something like this. This is why I went down this other p2p path. The problem is that I can't have the p2p network dogshit slow and it also must be stable, and I haven't found a suitable library, yet.
+
+On second thought, the p2p network is better, because even if sites like poal will eventually allow their users to comment directly in captaindirgo, they could setup a daemon. If I make direct connections, then all that code would be redundant when the p2p network is running.
+
+Maybe it would be good though. It would solve a lot of problems, even make mobile a lot easier. I might have to try it.
+
