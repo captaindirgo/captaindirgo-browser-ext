@@ -831,3 +831,15 @@ On second thought, the p2p network is better, because even if sites like poal wi
 
 Maybe it would be good though. It would solve a lot of problems, even make mobile a lot easier. I might have to try it.
 
+2022/10/18
+
+I reviewed Chord and S-Chord. S-Chord in particular seems like a much better solution, because the number of connections that need to be held open are much smaller and more static, which makes browser to browser communication much more workable.
+
+I tried to read about Pastry DHT, but it seemed complicated, and had a very large routing table, so I doubt it would work.
+
+I was thinking of how big sites, like poal, 4chan, etc. can work within the network. My current idea is just to make them regular users, in that all of poal would be a single node. In this way, these big websites could easily verify to the extension that the user exists and is logged in by the cookies already stored in the browser. Also, I could add a little icon that shows the user is from a particular website. This would give any big website that signed up free advertising, which would be an incentive to join the network.
+
+I was also thinking about how to allow bigger sites to cache more of the data than individual users to speed up the network. The issue here is that you'd need to be able to prevent a malicious user from pretending to be a big site, and pretend to cache, but actually censor messages. I don't have the details of this worked out, but the main idea is some sort of global state which is just a merkle tree and everything is verified through it using merkle paths.
+
+
+
