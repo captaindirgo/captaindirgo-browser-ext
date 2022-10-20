@@ -841,5 +841,8 @@ I was thinking of how big sites, like poal, 4chan, etc. can work within the netw
 
 I was also thinking about how to allow bigger sites to cache more of the data than individual users to speed up the network. The issue here is that you'd need to be able to prevent a malicious user from pretending to be a big site, and pretend to cache, but actually censor messages. I don't have the details of this worked out, but the main idea is some sort of global state which is just a merkle tree and everything is verified through it using merkle paths.
 
+2022/10/20
 
+Yesterday I did a little work on architecture and also read more about ICE and "trickle ICE" which deal with WebRTC and getting through nats and firewalls.
 
+Today I looked into what's called udp holepunching. This will make running daemons a lot easier in that you won't have to specifically open up a port on your firewall in most cases. 
