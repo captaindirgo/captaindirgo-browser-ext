@@ -846,3 +846,20 @@ I was also thinking about how to allow bigger sites to cache more of the data th
 Yesterday I did a little work on architecture and also read more about ICE and "trickle ICE" which deal with WebRTC and getting through nats and firewalls.
 
 Today I looked into what's called udp holepunching. This will make running daemons a lot easier in that you won't have to specifically open up a port on your firewall in most cases. 
+
+2022/10/21
+
+I read about udp holepunching, and protocols for opening up ports in the NAT/firewall, (uPNP, PCP, etc.). Seems like using a good library would be the way to go here, and there are several to choose from.
+
+For bootstrapping, I want to take advantage of bittorrent trackers to prevent a single point of failure. There are about 250 of them listed here: https://www.desmos.com/calculator/lrttqfca8b which would do quite nicely.
+
+I'm pretty sure I can get a browser to pretend to be a bittorrent peer and get a valid response. Then I make a fake captain-dirgo torrent infohash, that actually points to the captain-dirgo network, and thats how nodes will find each other.
+
+The only problem is that the only thing a bittorrent tracker will store is an ip and port. So, I will need some people running daemons that can expose a TCP port on the public internet, which I think I can make easier with uPNP et al.
+
+I was concerned about my sampling idea for PoW because I hadn't heard it being done before. So I researched it further, and found this paper on what's called "Proof of Sequential Work". The thing that made me relieved was that they are actually doing the same technique that I was thinking of: https://eprint.iacr.org/2018/183.pdf
+
+You can see this under section 1.2 PoSW Definition under Challenges (this is just another name for what I was calling "sampling")
+
+The other issue I was worried about was what's called "grinding". This is where you take the random seed for a process (or some other variable) and attempt to manipulate it to your advantage. But I proved to myself that grinding this sort of thing would actually take more work than doing it honestly, even if the sample size is as low as 2.
+
