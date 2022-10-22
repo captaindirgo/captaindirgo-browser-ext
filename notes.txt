@@ -863,3 +863,130 @@ You can see this under section 1.2 PoSW Definition under Challenges (this is jus
 
 The other issue I was worried about was what's called "grinding". This is where you take the random seed for a process (or some other variable) and attempt to manipulate it to your advantage. But I proved to myself that grinding this sort of thing would actually take more work than doing it honestly, even if the sample size is as low as 2.
 
+2022/10/22
+
+I was wrong about what I wrote about grinding yesterday. All it takes is to alter the portfolio a little bit, you don't need to recalculate the whole thing. If it was sequential, you could get away with it, because then all the previous work would be wasted whenever you remove something.
+
+I thought a lot about the network today. It's a bit hard to summarize, so below are the raw notes.
+
+I still have more to think through, but I'm getting closer.
+
+--
+
+I don't think proof of sequential work is too bad, though. When a user upvotes a comment, they are giving another user karma, so they need to do a store anyway, so whats wrong with doing a get first?
+
+But if two users upvote at the same time? One gets wasted? That's not good.
+
+What if we had multiple PoSW paths? I don't want to do a whole claim process and return functionality.
+
+Suppose lets say the user themselves are responsible for storing upvotes? Then they can't get upvotes while offline. 
+
+--
+
+I don't think this is necessary at all. First, we are going to do some sort of "what have you done for me lately" type of scheme. Second, we're not talking about a lot of data.
+
+Let's say a user has 10,000 upvotes in the last week.
+
+Then in order to save the entire portfolio, they only need for sha 256, 8 bytes of space for the hash. Of course there will be other numbers, the ts, the signature, whatever the hash was based on, so as a conservative estimate, lets say 80 bytes of space total (which is a lot).
+So that would be 80 * 100000 = around 8 meg. Not a ridiculous amount to store.
+
+Then the friendly peer will simply prove samples of that data to whoever asks.
+
+Not big, we don't need all this mathematical crap. We store the entire portfolio up to a
+specific limit, "what have you done for me lately".
+
+As far as a global state floating around and being signed, this seems like the easiest thing.
+Just use a gossip protocol among existing connections. 
+
+---
+
+This aint going to work.
+
+First, we can't do "what have you done for me lately" without timestamping. Timestamping requires a global state.
+
+I don't know how we can do a global state. Either every peer has to download the entire history of PoW of everyone, or at least the usernames.
+
+Ok, maybe we could do it. Suppose we have a global state that is represented only by a merkle tree root that everyone gossips around.
+
+Now lets say there are two, and a node wants to know which one to use. It picks a random value the same size as a hash on the DHT and does a special get for usernames that are referential from the global state merkle tree.
+
+Then any node that recognizes this merkle tree that is close to the value will return the closest id thats on the merkle tree, so it will have several, and then use the closest. It then verifies work by that user. If the closest user id is statistically improbable, it's considered a fail.
+
+Will that work? Or is it flawed?
+
+Lets say there is a huge number of adversaries in a bot net... ok this is silly, how can there be so many and still have a functioning network anyway?
+
+---
+
+There are some issues with that, even if it works so far. First, we need the merkle tree balanced, or we're going to have some uber long paths. Second, how do we update without a million
+nodes talking over each other?
+
+Third, we were talking about an "ordered" merkle tree. What is that? How can a merkle tree be ordered and balanced? There are such things as self balancing merkle trees.
+
+Here is how I think we should do it. We don't want userdata scattered everywhere,
+so instead we have a balanced tree up to the user, and then another balanced tree from
+the user down.
+
+This way a user can make any change it likes and it won't mess up everything else.
+
+--
+
+We have a kademlia dht of users (and urls).
+We also have a global state balanced merkle tree of users and urls.
+
+Then we somehow update the users by changing the global merkle tree, we don't know exactly how this will work.
+
+Then we have the urls, who is some nodes job to update. A particular url could get teemed with data, and the node just has to suck it up? Who is maintaining these url merkle trees?
+
+Do we need the urls in the global state? Or can they just be inside the DHT alone?
+
+---
+
+Here is another problem. Suppose a user has a grudge against another user, and hashes his id then knocks out his node?
+
+Then he can't talk on the network anymore. It's too effective to be ignored.
+
+So only if node id's can't be determined by user id's does this work.
+And then enough nodes have to cache each others data to prevent an individuals user data
+from being ddos'ed, or an individual url.
+
+--
+
+We may want to scrap this and go with the original idea, of a bunch of different sites all
+wanting access to the network, all with their individual users.
+
+They all gossip all data to one another. What about smurfs? Or do we do a web of trust?
+
+And even if we do a web of trust, we need everyone to save everyone elses data. Will they balk at that?
+
+And what do we know about running a site like that, where everone is attacking it. How can we possibly present code that they would want to use?
+
+And then the cost, because captaindirgo would be the first. And it would be attacked the most. How am I going to pay for this ridiculous thing?
+
+There is this here, https://www.theverge.com/2016/10/3/13155072/4chan-struggling-with-hosting-costs
+Admittedly they server images, but still. It's says they spent $6000 per month back in 2009.
+
+---
+
+So I still want to see if decentralization can be used.
+
+So we need a secret nodeid for each user. We probably want to hide source data from other entities as well, so a node can't try and figure out where a comment came from.
+
+Then we have to make sure that upvotes can't reveal the nodeid of a user, as well.
+
+So then no badges for running servers. No karma for doing server things.
+
+--
+
+I can't think of any way of encrypting proof of work where it can still be verified but the creator can't tell they created it. So that makes it theoretically possible to find which user owns which daemon node. It would be difficult. You'd have to cache all the user's data. Then upvote enery node you can find and then wait for it to show up in the user's portfolio. 
+So basically that means if you are a user and are accepting proof of work for running a server, you can be outed and people who don't like you can find your ip and ddos it or whatever. 
+Node ids are only related to ip and not user ids for the same reason.
+Also, there is no real way to tell if a user is really running a daemon or not wrt to karma or badges or whatnot. So running a server can boost karma but you can't be given a badge for doing so.
+What if you could establish an informal "credit" woth another node? So that way you can ask pow for your server be given to another server and on and on down a chain.
+So you'd ask another node for a deposit account. And they give you a user id. Hmm. Maybe too silly to work. You'd daisy chain through tons of nodes.
+Maybe you can just gift any karma you receive to any user you want. 
+
+
+
+
+
