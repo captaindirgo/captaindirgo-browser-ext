@@ -986,7 +986,71 @@ What if you could establish an informal "credit" woth another node? So that way 
 So you'd ask another node for a deposit account. And they give you a user id. Hmm. Maybe too silly to work. You'd daisy chain through tons of nodes.
 Maybe you can just gift any karma you receive to any user you want. 
 
+2022/10/24
 
+Yesterday and today I spent a lot of time reading about the Fiat Shamir heuristic. A short description can be found here: https://hackmd.io/@vKfUEAWlRR2Ogaq8nYYknw/rJ9_8WNLE?type=view , but basically the idea is to take an interactive protocol meant to prove a result and convert it into something that is not interactive, which is also called a proof signature. 
 
+I want to use it for the following. Imagine that whenever a user's comment is upvoted, the upvoter also does a Proof of Work calculation. A popular user could collect thousands of upvotes this way, and I want the total PoW collected as a karma score. The karma score would then be used to sort comments, so higher voted users are displayed first.
+
+The issue is that if each user has potentially thousands of PoW proofs, one for each upvote, it'd be too much processing power and take too much time to total up and verify each user's karma for a particular url, considering that maybe 100s of users might be commenting on it.
+
+So my idea was to that all these PoW proofs from the upvotes collected for each user is thrown into a merkle tree. To verify it, the verifier would only ask for a handful of random paths in the merkle tree and if those are correct, he would assume the whole tree was in all probability correct.
+
+The issue with this is that everytime a verifier wants to look up a users karma, they'd have to make that query to test random paths to a node on the network, which would have to hold all that data, and reply with the result. Considering all the views that a comment might receive, that is a lot of requests.
+
+With the Fiat Shamir heuristic, I could turn a merkle tree of thousands or even millions of small PoW units into a relatively small proof signature.
+
+The other thing this helps with, not an issue actually, but an opportunity, is to make it possible to use these small PoW units to secure a global state, since the proof signature of millions of small PoW units can be used in place of a large amount of PoW work, like bitcoin uses.
+
+The way it works is that instead of a verifier asking for several random PoW units to verify, it does the following:
+
+1. the prover instead passes the merkle tree into a hash function, which is used to derive the first pseudo random index to return a result for, 
+2. the prover then rehashes the previous hash appended with the previous result to get the 2nd index to verify,
+3. and so on for a specified number of items.
+
+This will prove that the whole set of PoW units is valid up to a certain probability.
+
+It does become a little tricky, though, because a cheating prover could make a merkle tree of PoW units where a certain percentage is fake and the PoW not done, thereby inflating the amount of PoW compared to what he actually did. Then he could alter his suspect merkle tree slightly by changing random fake nodes creating a new hash each time. When run through the Fiat Shamir algorithm he could find one that by chance only looked at valid Pow units, and therefore assumed the whole thing is valid.
+
+So, what I did was come up with an equation to show the minimum number of trials the signature should contain to validate that to create a PoW merkle tree with a specific percentage of fake units would take an amount of processing power that is greater or equal to creating an honest PoW merkle tree with 100% real PoW units.
+
+I'm not a mathematician at all, so here is the way I did that, with a very verbose description of how it's supposed to work:
+
+c - total calculations
+PoW - on average c calcuations have run (so a target of around 2 * c)
+x - avg number of calculations per upvote
+s - security we want. 0.9 = 90% have to be valid for a cheating prover to do the same work as if they made a 100% honest PoW tree
+p - indexes tested and stored in signature
+m - merkletree branch multiplier. It is the number of calculations to make a branch vs a single hash calculation unit of c
+lg2 - log base 2
+
+((1/s) ** p) * m * (lg2 (c/x)) >= c + m * (lg2 (c/x))
+
+(1/s) ** p) : number of tries on average that a cheating prover would have to do to create a valid signature for a merkle tree with (100% - s) invalid PoW nodes (or s percent valid PoW nodes). The assumption here is that the cheating prover can make a new tree for free by simply altering his fake nodes.
+c/x : total calculations divided by the avg calculations per upvote
+lg2 (c/x) : number of paths for a balanced tree
+...  = c + m * (lg2 (c/x)) : c is the total calcs for an honest PoW tree, and lg2 (c/x) is for the construction of the branches of the merkle tree. The idea here is that to grind enough to make a cheating tree have a valid signature with s percent of the units valid (and 100%-s invalid ones), they would have to do the same amount or greater work than an honest prover with 'p' merkle paths stored in the signature.
+
+Solve for p in terms of s,c,m, and x
+p = (log((c log(2))/(m log(c/x)) + 1))/log(1/s)
+
+Done here:
+https://www.wolframalpha.com/input?i2d=true&i=%5C%2840%29%5C%2840%29Divide%5B1%2Cs%5D%5C%2841%29+**+p%5C%2841%29+*+m+*+%5C%2840%29Log%5B2%2CDivide%5Bc%2Cx%5D%5D%5C%2841%29+%3D+c+%2B+m+*+%5C%2840%29Log%5B2%2CDivide%5Bc%2Cx%5D%5D%5C%2841%29%5C%2844%29+solve+for+p
+
+Online graph so I can mess with the security calculation and see how many paths it would take.
+https://www.desmos.com/calculator/rawixoyi9q
+
+If we set s to 70% we get around 80 paths.
+If we set s to 90% we get around 300 paths.
+
+A sha256 hash is already 32 bytes. And we still need to store the input data, which would be the sha256 of the other path, and the ordering data (we need ordering so a duplicate PoW unit can't be added to the tree twice, maybe that could be the sha itself though), which means 64 bytes, we may need some other things, dunno.
+80 paths, considering 64 bytes per node in path and lets say 1000 nodes, which would be a path length of 10 would mean 80 * 10 * 64 = 51k per signature. Not too shabby. Might be a little more, I guess.
+80 paths, considering 64 bytes per node in path and 1,000,000 nodes, would be a path length of 20 would mean 80 * 20 * 64 = 102k per signature.
+
+--
+
+As far as global state goes, I can do it, and it'd be kind of a weird system, because karma couldn't be sent/received, only earned. (I'm not sure how I could do that without the same huge multi GB blockchain sizes that the cryptocoins use. I have some ideas though).
+
+I don't see any use for this global state currently, though. Except possibly to increase security of urls and userdata. (ie make it append only).
 
 
