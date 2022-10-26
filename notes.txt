@@ -1053,4 +1053,17 @@ As far as global state goes, I can do it, and it'd be kind of a weird system, be
 
 I don't see any use for this global state currently, though. Except possibly to increase security of urls and userdata. (ie make it append only).
 
+2022/10/26
+
+Yesterday I looked into how to make the daemon app have a GUI. I'm thinking of using nwjs for this. It basically turns an app into a regular webpage as far as the backend goes. In this way I can share a lot of code from the daemon with the browser extension.
+
+I thought about turning the daemon into a regular browser as well. This would just be another way to use Captain Dirgo, rather than installing an extension. However, it lacks a back button and bookmarks, so I think if I want to add a Captain Dirgo browser I'd be better off forking Brave or something.
+
+Today I looked into how to structure the app. I experimented with Idris and I'm able to make it export functions, so I can call it from js, and it call back to js, too. So that may work well.
+
+I really don't want to program directly in js, it reminds me of the days I use to develop in Java, C, C++, etc. I recently wrote a tax program in Idris and the amount of bugs that I would end up making are so much less.
+
+I also looked into how I can write multiple packages at the same time. I have a browser client, a backend library and a daemon client. It would be better to split these out each into separate modules. The only problem is that I don't want to deal with having to build and import one project that's used by another every time I make a change.
+
+This looks like a good solution for that: https://javascript.plainenglish.io/how-to-create-multi-module-nodejs-applications-9aff2d73dc17
 
