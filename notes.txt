@@ -1067,3 +1067,11 @@ I also looked into how I can write multiple packages at the same time. I have a 
 
 This looks like a good solution for that: https://javascript.plainenglish.io/how-to-create-multi-module-nodejs-applications-9aff2d73dc17
 
+2022/10/28
+
+I looked more into idris and javascript and although it's possible, I don't think its a good idea. For one, when js calls idris, it won't be typesafe, which can screw up the whole thing. The other issue is that I wouldn't be able to use idris with any frontend code, which means I would be stuck with js or typescript anyway.
+
+Also, it's easy to fall down a rabbit hole using idris, so I'm back to typescrypt. The last couple of days I spent a lot of time learning the ins and outs of it.
+
+Other than that I fooled around with linking npm modules together so I can create a well structured project right off the bat.
+
