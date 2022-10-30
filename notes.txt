@@ -1075,3 +1075,8 @@ Also, it's easy to fall down a rabbit hole using idris, so I'm back to typescryp
 
 Other than that I fooled around with linking npm modules together so I can create a well structured project right off the bat.
 
+2022/10/30
+
+I'm been reading the typescript handbook and playing around with typescript the last two days. It's boring work and so I haven't been doing enough of it that I should, but I don't want to just start coding without getting a firm grasp of the language. Otherwise, the effect of doing that is going to ripple out into everything, so it's better not to try and take a shortcut here, I think.
+
+I still have more to read about typescript but I'm pretty confident I will get it done tomorrow, as long as the last couple of chapters aren't huge.
