@@ -1080,3 +1080,14 @@ Other than that I fooled around with linking npm modules together so I can creat
 I'm been reading the typescript handbook and playing around with typescript the last two days. It's boring work and so I haven't been doing enough of it that I should, but I don't want to just start coding without getting a firm grasp of the language. Otherwise, the effect of doing that is going to ripple out into everything, so it's better not to try and take a shortcut here, I think.
 
 I still have more to read about typescript but I'm pretty confident I will get it done tomorrow, as long as the last couple of chapters aren't huge.
+
+2022/11/1
+
+I nearly finished the typescript handbook yesterday, and finished the rest today and started working.
+
+I didn't get too far, but I managed a set of basic types for state, and state transistions, and figured out an easy way to do newtypes like with Haskell. I also made my first unit test.
+
+What's next is to dive into the hyperspace and dht code and see what I can reuse from it. There are a lot of little tricks it does to connect peers through firewalls and dht, but it's scattered, some of it is in hyperspace-dht, and some in dht-rpc.
+
+Also, these modules aren't meant to work within the browser, so I'll have to figure out what I can do with that.
+
