@@ -1091,3 +1091,15 @@ What's next is to dive into the hyperspace and dht code and see what I can reuse
 
 Also, these modules aren't meant to work within the browser, so I'll have to figure out what I can do with that.
 
+2022/11/2
+
+I looked closer at dht-rpc and I don't think I can use it, without altering a lot of it.
+I'm hesitant to do that because the code is pretty messy.
+
+I also don't think that typescript can do what I want after all. I couldn't get states to work at compile time like I wanted and searched the web and all the state solutions didn't work at compile time either. So I'm going back to using idris. It shouldn't be too hard, I just have to write a simple FFI interface that can marshall objects back and forth, and then I will be set.
+
+In the end I think it will be a much more stable system.
+
+I also found another project that does dht between peers and the browser, and is written much more cleanly, but it lacks a lot of features that I will need.
+
+So, I think I'll just write most of it in idris and compile it to js. That's what I wanted to do at the start, anyway.
