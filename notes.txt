@@ -1103,3 +1103,26 @@ In the end I think it will be a much more stable system.
 I also found another project that does dht between peers and the browser, and is written much more cleanly, but it lacks a lot of features that I will need.
 
 So, I think I'll just write most of it in idris and compile it to js. That's what I wanted to do at the start, anyway.
+
+2022/11/4
+
+I've been thinking about how to fit idris and javascript as seamless as possible.
+
+The FFI code in the idris compiler is a little lacking in that although it supports calling
+javascript from idris pretty well, vice versa is a little iffy. I mean I can call idris from
+js but it's pretty bare bones. Any call that is made lacks any type checking, which means
+I'd either have to write it by hand or find some way to automate it.
+
+I have been looking at the source code for the idris compiler to see how easy it would be
+to create what amounts basically to a "header file" in typescript, so that at least the
+types would have to match when calling into idris.
+
+It's quite complicated and I probably shouldn't be messing with the compiler, but it seems
+that it may be in reach. If so, I could also give the patch to the idris community to see
+if they want to add it to idris.
+
+Besides that I looked at how to use reflection to automatically marshall idris record types
+into js objects.
+
+
+
