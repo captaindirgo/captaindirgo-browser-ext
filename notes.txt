@@ -1133,3 +1133,21 @@ I did think of another idea for the design. I think what I'm going to do to allo
 I created a test framework for idris and was able to start passing values back and forth between Idris and javascript.
 
 I learned about linear types which allows you to set it up so the compiler prevents you from forgetting to clean up a resource, or checking if its in the wrong state at compile time. So if you open a socket, you can set it up so that won't even compile without closing the socket. You can also guarantee that you'll never try to write to closed socket, etc.
+
+2022/11/8
+
+I was mainly working on the Idris compiler. The problem is that the javascript codegen doesn't produce any type definitions when it compiles idris to javascript. This means that calls from javascript to idris aren't checked at all, and I wanted to tighten that up so that I can keep bugs to a minimum.
+
+So yesterday, I dove into the javascript codegen. It erases a lot of the types, unfortunately, before it gets to that step, but I found that it does recreate them when producing Idris => foreign language calls. I was able to reuse most of this logic, albeit copying some, so that I can create typescript declarations for the exported Idris functions.
+
+At first, I wanted to do it using JSDoc, since I could insert it directly into the javascript itself, and then have typescript typecheck like it does with a normal ts file. The problem is that the implementation that Idris produces is not compatible with typecheck. It has a tendency to reuse variables with different types. This is a big no-no in typescript and there is no option to turn off checking for this.
+
+I ended up modifying it to create a .d.ts file along with the js file which only has the declarations. This way typescript won't try and process the implementations, but will still get the types necessary for calling idris functions.
+
+However, the current interface only supports creating one file for the output from compilation. This means that either I have to change the entire interface for all the backends for Idris (which supports several, C, scheme, javascript/node, etc.), or hack the js component to produce two files rather than one. I chose the latter, since if I am ever able to convince the Idris developers to accept my pull request, it would be with a very small code change affecting one backend, rather than a radical one affecting them all.
+
+All in all, I'm starting to see the Idris codebase as more and more of a mess. It keeps redefining the same concepts with different datatypes, all with slightly different information. It has very little documentation and very hard to understand what is going on. For example, they have Term, CDef, IPTerm, TT, TTImp and probably others, all to define the same concept, and all with slightly different quirks. It might be my ignorance, but I do not understand why they code this way.
+
+I had a short day today, but I've come through to the other side, and pretty sure that I can get the result that I want. My plan is to use my custom version of idris to continue programming Captain Dirgo. After making sure that it works and is useful, I'll make a pull request showing the benefits of what I've done.
+
+Hopefully they will accept it, but if not, I don't really care, I'll just maintain my fork, because it makes FFI between js and idris much easier.
