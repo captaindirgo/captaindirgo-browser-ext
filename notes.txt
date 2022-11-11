@@ -1151,3 +1151,14 @@ All in all, I'm starting to see the Idris codebase as more and more of a mess. I
 I had a short day today, but I've come through to the other side, and pretty sure that I can get the result that I want. My plan is to use my custom version of idris to continue programming Captain Dirgo. After making sure that it works and is useful, I'll make a pull request showing the benefits of what I've done.
 
 Hopefully they will accept it, but if not, I don't really care, I'll just maintain my fork, because it makes FFI between js and idris much easier.
+
+2022/11/11
+
+I realized I made a mistake and decided to back out of trying to change the Idris compiler. I got far enough to create typescript declarations, but only for primitive fields and not for records. It would be too deep of change to fix those.
+
+I have been working more with the existing idris js libraries, and it looks like it should work well enough.
+
+There is even a generator for boilerplate idris FFI code for webidl, so I plan to write a few webidl definitions of what I need for this project so that I don't need to write a bunch of boilerplate by hand, or make my own scripts to handle this.
+
+I looked deeper into bittorrent-tracker, and I think I'm going to try just using some http library, or just the javascript interface itself for calling the tracker. The problem is that the browser isn't really meant for a bt tracker (besides a websocket one, but there are very few public servers of these), so I will work on interfacing with that next.
+
