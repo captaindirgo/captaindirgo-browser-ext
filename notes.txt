@@ -1162,3 +1162,23 @@ There is even a generator for boilerplate idris FFI code for webidl, so I plan t
 
 I looked deeper into bittorrent-tracker, and I think I'm going to try just using some http library, or just the javascript interface itself for calling the tracker. The problem is that the browser isn't really meant for a bt tracker (besides a websocket one, but there are very few public servers of these), so I will work on interfacing with that next.
 
+2022/11/14
+
+Checked a bunch of torrents and magnet links. I never could get a http address working. Only udp. I even used qbittorrent to make sure I was doing it correctly.
+
+Furthermore, there is no "unannounce", so even if we could find an http address to look for peers, we'd end up adding a bunch of dummy ones.
+
+And finally, regardless if websocket or http, if there are millions of users connecting, we definitely don't want to use some poor tracker to do this.
+
+So I'm dropping the idea to use public bittorrent trackers to bootstrap the network
+
+Also, I may stop using the webidl library as well. There are some function apis that I don't think work well with it. I'm not even sure I need much boilerplate, so I'm not going to worry about that.
+
+I spent a lot of time today and yesterday working on Kademlia DHT k-buckets. I got caught up on the idea to prove that the implementation I made would always join buckets when the number of peers shrink enough so they could be held in just one. It was a rabbit hole, I wasted three hours on that before I finally gave up on it.
+
+That's the main problem with Idris, you have to be careful about what you think you can do. Something that seems easy on the surface may be extremely complex when you get into it, and it's really hard not to "throw good after bad" and keeping working when you know you should move on and find another way.
+
+But after moving past that, I got the basic implementation down, and I should be able to build off of that for the rest of the project.
+
+
+
